@@ -17,7 +17,12 @@ const messaging = firebase.messaging();
 messaging.requestPermission()
 .then(function() {
     console.log('Access Granted');
+    return messaging.getToken();
+})
+    .then(function(token)   {
+    console.log(token);
 })
 .catch(function(err) {
-    concole.log('Access Denied');
+    console.log('Access Denied');
 })
+

@@ -34,9 +34,6 @@
       </script>
 
       <script>
-          database.ref('users/').set({
-              user: 'TESTER BOIS'
-          });
           function signUserOut()
           {
             firebase.auth().signOut().then(function() {

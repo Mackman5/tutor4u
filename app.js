@@ -1,9 +1,3 @@
-// Your web app's Firebase configuration
-var firebaseConfig = {
-
-};
-// Initialize Firebase
-firebase.initializeApp(firebaseConfig);
 firebase.analytics();
 
 const database = firebase.database();

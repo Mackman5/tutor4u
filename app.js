@@ -25,15 +25,7 @@ function fireWrite(thingToChange, changeTo) {
     });
 }
 
-//###################################### cloud messaging ################################################
-
-// Retrieve Firebase Messaging object.
-const messaging = firebase.messaging();
-
-// Add the public key generated from the console here.
-messaging.usePublicVapidKey("BPCPOHQnf1LKo0mlTvQqs_2kQx2c-pIAlUCQ3fKo9adES11jS4Lls8oYZagZXq_O2LjuIwjqIO-i17F-aF7zohw");
-
-//Notification Request
+/*/Notification Request
 messaging.requestPermission()
 .then(function() {
     console.log('Access Granted');
@@ -44,4 +36,4 @@ console.log(token);
 })
 .catch(function(err) {
     console.log('Error!');
-})
+})*/

@@ -23,8 +23,48 @@
     <script>
         firebase.auth().onAuthStateChanged(function(user) {
             if (user) {
+                try
+                {
+                    var temp2 = (user.email).split("@");
+                    var tempRef = database.ref("auth/");
+                    tempRef.on('value', getData, errData);
+                    function getData(data)
+                    {
+                        var userInfo = data.val();
+                        var keys = Object.keys(userInfo);
+
+
+                        for (var i = 0; i < keys.length; i++)
+                        {
+                            var k = keys[i];
+                            if (k === temp2[0])
+                            {
+                                database.ref("auth/users/" + user.uid + "/").set({
+                                    displayName: userInfo[k].displayName,
+                                    email: userInfo[k].email,
+                                    grade: userInfo[k].grade,
+                                    role : userInfo[k].role
+                                });
+
+                                database.ref("auth/" + temp2[0]).remove();
+                            }
+                        }
+
+
+                    }
+
+                    function errData(err)
+                    {
+                        console.log("Error!");
+                        console.log(err);
+                    }
+                }catch(err)
+                {
+                    console.log(err);
+                }
                 window.location.replace("index.html");
             } else {
+                alert("No user detected");
                 // No user is signed in.
             }
         });
@@ -55,27 +95,59 @@
                 alert("Sorry, " + errorMessage);
                 // ...
             });
+            postSignUp();
+        }
 
-
-            database.ref("users/").set({
-                firstName: "Sebas",
-                lastName: "Quiros"
+        function postSignUp()
+        {
+            var temp1 = document.getElementById("email_field").value.split("@");
+            database.ref("auth/" + temp1[0] + "/").set({
+                displayName: document.getElementById("name_field").value,
+                email: document.getElementById("email_field").value,
+                grade: document.getElementById("grade_field").value,
+                role : document.getElementById("role_field").value
             });
+        }
+
+        function signUpSetup()
+        {
+            document.getElementById("actionLink").innerHTML = "<a onclick = \"loginSetup();\">Login</a>";
+            document.getElementById("actionButton").innerHTML = "<button onclick = \"signUp()\" id = \"loginButton\">Sign Up</button>";
+            document.getElementById("displayNameToggle").innerHTML = "Display Name: &nbsp;<input type = \"text\" name = \"displayName\" id = \"name_field\"/>";
+            document.getElementById("gradeToggle").innerHTML = "Grade: &nbsp;<input type = \"number\" name = \"grade\" id = \"grade_field\"/>";
+            document.getElementById("roleToggle").innerHTML = "Role: &nbsp;<input type = \"text\" name = \"role\" id = \"role_field\"/>";
+        }
+
+        function loginSetup()
+        {
+            document.getElementById("actionLink").innerHTML = "<a onclick = \"signUpSetup();\">Sign Up</a>";
+            document.getElementById("actionButton").innerHTML = "<button onclick = \"login()\" id = \"loginButton\">Login</button>";
+            document.getElementById("displayNameToggle").innerHTML = "";
+            document.getElementById("gradeToggle").innerHTML = "";
+            document.getElementById("roleToggle").innerHTML = "";
         }
 
     </script>
 </head>
 <body>
     <div id = "input-form">
-        Username:
-        <input type = "text" name = "username" id = "email_field"/>
-        <br>
-        Password:
-        <input type = "password" name = "password" id = "password_field"/>
+
+        <p>Email: &nbsp;<input type = "text" name = "email" id = "email_field"/></p>
         <br>
 
-        <button onclick = "login()" id = "loginButton">Log In</button>
-        <button onclick = "signUp()" id = "signUpButton">Sign Up</button>
+        <p>Password: &nbsp;<input type = "password" name = "password" id = "password_field"/></p>
+        <br>
+
+        <p id = "displayNameToggle"></p>
+        <br>
+
+        <p id = "gradeToggle"></p>
+        <br>
+
+        <p id = "roleToggle"></p>
+
+        <p id = "actionLink"><a onclick = "signUpSetup();">Sign Up</a></p>
+        <p id = "actionButton"><button onclick = "login()" id = "loginButton">Log In</button></p>
     </div>
 </body>
 </html>

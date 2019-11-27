@@ -8,7 +8,7 @@
       <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
       <script  src="https://www.gstatic.com/firebasejs/7.5.0/firebase-app.js"></script>
 
-      <!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
+      <!-- If you ebnabled Analytics in your project, add the Firebase SDK for Analytics -->
       <script src="https://www.gstatic.com/firebasejs/7.5.0/firebase-analytics.js"></script>
 
       <!-- Add Firebase products that you want to use -->
@@ -23,9 +23,32 @@
 
       <script>
         firebase.auth().onAuthStateChanged(function(user) {
-          if (user) {
+          if (user)
+          {
             document.getElementById("mainButton").innerHTML = "<button id = \"logout\" onclick = \"signUserOut()\">Logout</button>";
-          } else {
+
+              var userRef = firebase.database().ref("users/" + user.uid + "/");
+              userRef.on('value', getData, errData);
+              var realValues = [];
+              function getData(data)
+              {
+                  var userInfo = data.val();
+                  var key = Object.keys(userInfo);
+                  alert("YETETETETET");
+                  for (var i = 0; i < key.length; i++) {
+                      realValues[i] = userInfo[key[i]];
+                      alert(realValues[i]);
+                  }
+              }
+
+              function errData(err)
+              {
+                  console.log("Error!");
+                  console.log(err);
+              }
+          }
+          else
+          {
             // No user is signed in.
             document.getElementById("mainButton").innerHTML = "<a href = \"login.html\"><button id = \"get-started\">Get started</button></a>";
           }
@@ -93,7 +116,9 @@
       Message:
       <input type = "text" id = "messageSent" />
       <button onclick = "updateMessage();">Submit Message</button>
+      <p id = "testerbois">YEEEEET</p>
       <div id = "loading">
       </div>
+
   </body>
 </html>

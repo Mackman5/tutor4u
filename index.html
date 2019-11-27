@@ -34,7 +34,6 @@
       </script>
 
       <script>
-
           function signUserOut()
           {
             firebase.auth().signOut().then(function() {
@@ -43,8 +42,38 @@
               // An error happened.
             });
           }
-      </script>
 
+          function fireWrite(thingToChange, changeTo) {
+            database.ref(thingToChange +  '/').set({
+              thingToChange: changeTo
+            });
+          }
+
+          function updateMessage()
+          {
+            fireWrite("message", document.getElementById("messageSent").value);
+            var messageRef = firebase.database().ref("message/");
+            messageRef.on('value', getData, errData);
+          }
+
+          var messageRef = firebase.database().ref("message/");
+          messageRef.on('value', getData, errData);
+          function getData(data)
+          {
+            var message = data.val();
+            var key = Object.keys(message);
+            document.getElementById("message").innerHTML = document.getElementById("messageUser").value + ": " + message[key];
+          }
+
+          function errData(err)
+          {
+            console.log("Error!");
+            console.log(err);
+          }
+
+
+
+      </script>
 
   </head>
   <body>
@@ -57,6 +86,13 @@
           <li id = "mainButton"></li>
         </ul>
       </nav>
+      <p id = "message"></p>
+      <br>
+      Name:
+      <input type = "text" id = "messageUser">
+      Message:
+      <input type = "text" id = "messageSent" />
+      <button onclick = "updateMessage();">Submit Message</button>
       <div id = "loading">
       </div>
   </body>

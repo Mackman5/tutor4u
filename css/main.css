@@ -28,7 +28,7 @@ nav ul li
   margin-left: 24%;
 }
 
-#get-started, #logout
+#get-started, #logout, #loginButton, #signUpButton
 {
   background-color: #1e88e5;
   color: #FFFFFF;
@@ -51,4 +51,30 @@ nav ul li
 a
 {
   text-decoration: none;
+}
+
+#email_field, #password_field
+{
+  margin-top: 100px;
+}
+
+#input-form
+{
+  text-align: center;
+  border-radius: 20px;
+  padding: 30px;
+  width: 300px;
+  height: 500px;
+  margin: auto;
+  background-color: #B5D6FB;
+}
+
+#loginButton
+{
+  margin-top: 100px;
+}
+
+#message
+{
+  margin-top: 400px;
 }

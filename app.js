@@ -1,3 +1,4 @@
+
 // Your web app's Firebase configuration
 const firebaseConfig = {
     //config from firebase console
@@ -13,20 +14,19 @@ const firebaseConfig = {
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 firebase.analytics();
-
 const database = firebase.database();
 
-function writeUserData(userId, name, email, imageUrl) {
-    firebase.database().ref('users/' + userId).set({
-        username: name,
-        email: email,
-        profile_picture : imageUrl
+//write to firebase function
+//thingToChange must be a valid thing, changeTo must be a string
+// E.x: fireWrite( "test", "Henlo");
+function fireWrite(thingToChange, changeTo) {
+    database.ref(thingToChange +  '/').set({
+        thingToChange: changeTo
     });
 }
 
-
-
-/*messaging.requestPermission()
+/*/Notification Request
+messaging.requestPermission()
 .then(function() {
     console.log('Access Granted');
     return messaging.getToken();

@@ -1,4 +1,3 @@
-
 // Your web app's Firebase configuration
 const firebaseConfig = {
     //config from firebase console
@@ -14,6 +13,7 @@ const firebaseConfig = {
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 firebase.analytics();
+
 const database = firebase.database();
 
 function writeUserData(userId, name, email, imageUrl) {
@@ -23,6 +23,9 @@ function writeUserData(userId, name, email, imageUrl) {
         profile_picture : imageUrl
     });
 }
+
+
+
 /*messaging.requestPermission()
 .then(function() {
     console.log('Access Granted');

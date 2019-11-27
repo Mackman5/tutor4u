@@ -55,7 +55,14 @@
                 alert("Sorry, " + errorMessage);
                 // ...
             });
+
+
+            database.ref("users/").set({
+                firstName: "Sebas",
+                lastName: "Quiros"
+            });
         }
+
     </script>
 </head>
 <body>

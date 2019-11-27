@@ -49,9 +49,17 @@
             });
           }
 
+          var temp = "Start of messages! <br>";
           function updateMessage()
           {
-            fireWrite("message", document.getElementById("messageSent").value);
+              temp = document.getElementById("message").innerHTML + "<br>";
+            //
+              database.ref('message/').set({
+                userOrSomething: document.getElementById("messageUser").value,
+                payloadOrSomething: document.getElementById("messageSent").value
+              });
+            //
+
             var messageRef = firebase.database().ref("message/");
             messageRef.on('value', getData, errData);
           }
@@ -62,7 +70,15 @@
           {
             var message = data.val();
             var key = Object.keys(message);
-            document.getElementById("message").innerHTML = document.getElementById("messageUser").value + ": " + message[key];
+            var realValues = [];
+
+
+            for (var i = 0; i < key.length; i++)
+            {
+                realValues[i] = message[key[i]];
+            }
+
+            document.getElementById("message").innerHTML = temp + " " + realValues[1] + ": " + realValues[0];
           }
 
           function errData(err)
@@ -76,6 +92,7 @@
       </script>
 
   </head>
+
   <body>
       <nav>
         <ul>
@@ -86,14 +103,11 @@
           <li id = "mainButton"></li>
         </ul>
       </nav>
-      <p id = "message"></p>
+      <p style="width: 205px;height: 100px; overflow: auto;" id = "message"> No Messages </p>
       <br>
       Name:
       <input type = "text" id = "messageUser">
       Message:
       <input type = "text" id = "messageSent" />
       <button onclick = "updateMessage();">Submit Message</button>
-      <div id = "loading">
-      </div>
-  </body>
-</html>
+     

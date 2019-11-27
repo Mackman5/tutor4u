@@ -16,14 +16,25 @@ firebase.initializeApp(firebaseConfig);
 firebase.analytics();
 const database = firebase.database();
 
-function writeUserData(userId, name, email, imageUrl) {
-    firebase.database().ref('users/' + userId).set({
-        username: name,
-        email: email,
-        profile_picture : imageUrl
+//write to firebase function
+//thingToChange must be a valid thing, changeTo must be a string
+// E.x: fireWrite( "test", "Henlo");
+function fireWrite(thingToChange, changeTo) {
+    database.ref(thingToChange +  '/').set({
+        thingToChange: changeTo
     });
 }
-/*messaging.requestPermission()
+
+//###################################### cloud messaging ################################################
+
+// Retrieve Firebase Messaging object.
+const messaging = firebase.messaging();
+
+// Add the public key generated from the console here.
+messaging.usePublicVapidKey("BPCPOHQnf1LKo0mlTvQqs_2kQx2c-pIAlUCQ3fKo9adES11jS4Lls8oYZagZXq_O2LjuIwjqIO-i17F-aF7zohw");
+
+//Notification Request
+messaging.requestPermission()
 .then(function() {
     console.log('Access Granted');
     return messaging.getToken();
@@ -33,4 +44,4 @@ console.log(token);
 })
 .catch(function(err) {
     console.log('Error!');
-})*/
+})

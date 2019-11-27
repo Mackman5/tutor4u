@@ -21,14 +21,17 @@ const functions = require('firebase-functions');
 // The Firebase Admin SDK to access the Firebase Realtime Database.
 const admin = require('firebase-admin');
 
-function writeUserData(userId, name, email, imageUrl) {
-    firebase.database().ref('users/' + userId).set({
-        username: name,
-        email: email,
-        profile_picture : imageUrl
+//write to firebase function
+//thingToChange must be a valid thing, changeTo must be a string
+// E.x: fireWrite( "test", "Henlo");
+function fireWrite(thingToChange, changeTo) {
+    database.ref(thingToChange +  '/').set({
+        thingToChange: changeTo
     });
 }
-/*messaging.requestPermission()
+
+/*/Notification Request
+messaging.requestPermission()
 .then(function() {
     console.log('Access Granted');
     return messaging.getToken();

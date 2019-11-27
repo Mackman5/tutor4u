@@ -81,5 +81,8 @@ a
 
 #message
 {
-  margin-top: 400px;
+  border: #CCC 2px solid;
+  width: 75%;height: 450px;
+  overflow: auto;
+  margin-top: 130px;
 }

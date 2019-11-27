@@ -36,43 +36,48 @@
       <script>
           function signUserOut()
           {
-            firebase.auth().signOut().then(function() {
-              // Sign-out successful.
-            }).catch(function(error) {
-              // An error happened.
-            });
+              firebase.auth().signOut().then(function() {
+                  // Sign-out successful.
+              }).catch(function(error) {
+                  // An error happened.
+              });
           }
-
           function fireWrite(thingToChange, changeTo) {
-            database.ref(thingToChange +  '/').set({
-              thingToChange: changeTo
-            });
+              database.ref(thingToChange +  '/').set({
+                  thingToChange: changeTo
+              });
           }
-
+          var temp = "Start of messages! <br>";
           function updateMessage()
           {
-            fireWrite("message", document.getElementById("messageSent").value);
-            var messageRef = firebase.database().ref("message/");
-            messageRef.on('value', getData, errData);
+              temp = document.getElementById("message").innerHTML + "<br>";
+              //
+              database.ref('message/').set({
+                  userOrSomething: document.getElementById("messageUser").value,
+                  payloadOrSomething: document.getElementById("messageSent").value
+              });
+              //
           }
-
           var messageRef = firebase.database().ref("message/");
           messageRef.on('value', getData, errData);
           function getData(data)
           {
-            var message = data.val();
-            var key = Object.keys(message);
-            document.getElementById("message").innerHTML = document.getElementById("messageUser").value + ": " + message[key];
+              var temp = document.getElementById("message").innerHTML + "<br>";
+              var message = data.val();
+              var key = Object.keys(message);
+              var realValues = [];
+              for (var i = 0; i < key.length; i++)
+              {
+                  realValues[i] = message[key[i]];
+                  realValues[i] = realValues[i].replace("<", "< ")
+              }
+              document.getElementById("message").innerHTML = temp + " " + realValues[1] + ": " + realValues[0];
           }
-
           function errData(err)
           {
-            console.log("Error!");
-            console.log(err);
+              console.log("Error!");
+              console.log(err);
           }
-
-
-
       </script>
 
   </head>
@@ -86,7 +91,8 @@
           <li id = "mainButton"></li>
         </ul>
       </nav>
-      <p id = "message"></p>
+      <p id = "message"> Messages Go Here </p>
+      <br>
       <br>
       Name:
       <input type = "text" id = "messageUser">

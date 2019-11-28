@@ -1,107 +1,124 @@
 <!DOCTYPE html>
 <html lang = "en">
-<head>
+  <head>
     <title>TEST</title>
     <meta charset = "utf-8" />
     <link rel="stylesheet" type="text/css" href="css/main.css">
 
-    <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
-    <script  src="https://www.gstatic.com/firebasejs/7.5.0/firebase-app.js"></script>
+      <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+      <script  src="https://www.gstatic.com/firebasejs/7.5.0/firebase-app.js"></script>
 
-    <!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
-    <script src="https://www.gstatic.com/firebasejs/7.5.0/firebase-analytics.js"></script>
+      <!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
+      <script src="https://www.gstatic.com/firebasejs/7.5.0/firebase-analytics.js"></script>
 
-    <!-- Add Firebase products that you want to use -->
-    <script src="https://www.gstatic.com/firebasejs/7.5.0/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/7.5.0/firebase-firestore.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/7.5.0/firebase-messaging.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/7.5.0/firebase-analytics.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/7.5.0/firebase-database.js"></script>
+      <!-- Add Firebase products that you want to use -->
+      <script src="https://www.gstatic.com/firebasejs/7.5.0/firebase-auth.js"></script>
+      <script src="https://www.gstatic.com/firebasejs/7.5.0/firebase-firestore.js"></script>
+      <script src="https://www.gstatic.com/firebasejs/7.5.0/firebase-messaging.js"></script>
+      <script src="https://www.gstatic.com/firebasejs/7.5.0/firebase-analytics.js"></script>
+      <script src="https://www.gstatic.com/firebasejs/7.5.0/firebase-database.js"></script>
 
 
-    <script src="app.js"></script>
+      <script src="app.js"></script>
 
-    <!-- Add the math adding thingy -->
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.0/es5/tex-mml-chtml.js"></script>
-
-    <script>
+      <script>
         firebase.auth().onAuthStateChanged(function(user) {
-            if (user) {
-                document.getElementById("mainButton").innerHTML = "<button id = \"logout\" onclick = \"signUserOut()\">Logout</button>";
-            } else {
-                // No user is signed in.
-                document.getElementById("mainButton").innerHTML = "<a href = \"login.html\"><button id = \"get-started\">Get started</button></a>";
-            }
-            document.getElementById("loading").style.display = "none";
-        });
-    </script>
+          if (user) {
+            document.getElementById("mainButton").innerHTML = "<button id = \"logout\" onclick = \"signUserOut()\">Logout</button>";
 
-    <script>
-        function signUserOut()
-        {
-            firebase.auth().signOut().then(function() {
-                // Sign-out successful.
-            }).catch(function(error) {
-                // An error happened.
-            });
-        }
-        function fireWrite(thingToChange, changeTo) {
-            database.ref(thingToChange +  '/').set({
-                thingToChange: changeTo
-            });
-        }
-        var temp = "Start of messages! <br>";
-        function updateMessage()
-        {
-            temp = document.getElementById("message").innerHTML + "<br>";
-            //
-            database.ref('message/').set({
-                userOrSomething: document.getElementById("messageUser").value,
-                payloadOrSomething: document.getElementById("messageSent").value
-            });
-            //
-        }
+            /*var info = database.ref("auth/users/" + user.uid);
+            info.on('value', obtainData, errData);
 
-
-        var messageRef = firebase.database().ref("message/");
-        messageRef.on('value', getData, errData);
-        function getData(data)
-        {
-            var temp = document.getElementById("message").innerHTML + "<br>";
-            var message = data.val();
-            var key = Object.keys(message);
-            var realValues = [];
-            for (var i = 0; i < key.length; i++)
+            function obtainData(pData)
             {
-                realValues[i] = message[key[i]];
-                realValues[i] = realValues[i].replace("<", "< ")
+                var userData = pData.val();
+                var userDataKeys = Object.keys(userData);
+
             }
-            document.getElementById("message").innerHTML = temp + " " + realValues[1] + ": " + realValues[0];
-        }
-        function errData(err)
-        {
-            console.log("Error!");
-            console.log(err);
-        }
-    </script>
 
-</head>
+            function errData(err)
+            {
+                console.log("Error!");
+                console.log(err);
+            }
 
-<body>
-<nav>
-    <ul>
-        <li class = "left-nav"><h1>Tutor for you</h1></li>
-        <li class = "left-nav"><h2>Tutoring</h2></li>
-        <li class = "left-nav"><h2>Options</h2></li>
-        <li class = "left-nav"><h2>About</h2></li>
-        <li id = "mainButton"></li>
-    </ul>
-</nav>
-<p style="border: #CCC 2px solid; width: 75%;height: 450px; overflow: auto; /*REMOVE THIS IT IS BAD EDIQUIITTEE*/ margin-top: 130px;" id = "message"> Messages Go Here </p>
-<br>
-Name:
-<input type = "text" id = "messageUser" />
-Message:
-<input type = "text" id = "messageSent" />
-<button onclick = "updateMessage();">Submit Message</button>
+            document.getElementById("testerWelcome").innerHTML = "Welcome " + user.displayName + "! You are a gr." +*/
+
+          } else {
+            // No user is signed in.
+            document.getElementById("mainButton").innerHTML = "<a href = \"login.html\"><button id = \"get-started\">Get started</button></a>";
+          }
+          document.getElementById("loading").style.display = "none";
+        });
+      </script>
+
+      <script>
+          function signUserOut()
+          {
+              firebase.auth().signOut().then(function() {
+                  // Sign-out successful.
+              }).catch(function(error) {
+                  // An error happened.
+              });
+          }
+          function fireWrite(thingToChange, changeTo) {
+              database.ref(thingToChange +  '/').set({
+                  thingToChange: changeTo
+              });
+          }
+          var temp = "Start of messages! <br>";
+          function updateMessage()
+          {
+              temp = document.getElementById("message").innerHTML + "<br>";
+              //
+              database.ref('message/').set({
+                  userOrSomething: document.getElementById("messageUser").value,
+                  payloadOrSomething: document.getElementById("messageSent").value
+              });
+              //
+          }
+          var messageRef = firebase.database().ref("message/");
+          messageRef.on('value', getData, errData);
+          function getData(data)
+          {
+              var temp = document.getElementById("message").innerHTML + "<br>";
+              var message = data.val();
+              var key = Object.keys(message);
+              var realValues = [];
+              for (var i = 0; i < key.length; i++)
+              {
+                  realValues[i] = message[key[i]];
+                  realValues[i] = realValues[i].replace(/</g, "< ")
+              }
+              document.getElementById("message").innerHTML = temp + " " + realValues[1] + ": " + realValues[0];
+          }
+          function errData(err)
+          {
+              console.log("Error!");
+              console.log(err);
+          }
+      </script>
+
+  </head>
+  <body>
+      <nav>
+        <ul>
+          <li class = "left-nav"><h1>Tutor for you</h1></li>
+          <li class = "left-nav"><h2>Tutoring</h2></li>
+          <li class = "left-nav"><h2>Options</h2></li>
+          <li class = "left-nav"><h2>About</h2></li>
+          <li id = "mainButton"></li>
+        </ul>
+      </nav>
+      <p id = "message"> Messages Go Here </p>
+      <br>
+      <br>
+      Name:
+      <input type = "text" id = "messageUser">
+      Message:
+      <input type = "text" id = "messageSent" />
+      <button onclick = "updateMessage();">Submit Message</button>
+      <div id = "loading">
+      </div>
+  </body>
+</html>

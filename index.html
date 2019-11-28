@@ -25,6 +25,25 @@
         firebase.auth().onAuthStateChanged(function(user) {
           if (user) {
             document.getElementById("mainButton").innerHTML = "<button id = \"logout\" onclick = \"signUserOut()\">Logout</button>";
+
+            /*var info = database.ref("auth/users/" + user.uid);
+            info.on('value', obtainData, errData);
+
+            function obtainData(pData)
+            {
+                var userData = pData.val();
+                var userDataKeys = Object.keys(userData);
+
+            }
+
+            function errData(err)
+            {
+                console.log("Error!");
+                console.log(err);
+            }
+
+            document.getElementById("testerWelcome").innerHTML = "Welcome " + user.displayName + "! You are a gr." +*/
+
           } else {
             // No user is signed in.
             document.getElementById("mainButton").innerHTML = "<a href = \"login.html\"><button id = \"get-started\">Get started</button></a>";
@@ -69,7 +88,7 @@
               for (var i = 0; i < key.length; i++)
               {
                   realValues[i] = message[key[i]];
-                  realValues[i] = realValues[i].replace("<", "< ")
+                  realValues[i] = realValues[i].replace(/</g, "< ")
               }
               document.getElementById("message").innerHTML = temp + " " + realValues[1] + ": " + realValues[0];
           }

@@ -26,7 +26,8 @@
           if (user) {
             document.getElementById("mainButton").innerHTML = "<button id = \"logout\" onclick = \"signUserOut()\">Logout</button>";
 
-            /*var info = database.ref("auth/users/" + user.uid);
+            var listInfo = [];
+            var info = database.ref("auth/users/" + user.uid);
             info.on('value', obtainData, errData);
 
             function obtainData(pData)
@@ -34,6 +35,19 @@
                 var userData = pData.val();
                 var userDataKeys = Object.keys(userData);
 
+                for (var i = 0; i < userDataKeys.length; i++)
+                {
+                    var userK = userDataKeys[i];
+                    listInfo.push(userData[userK]);
+                }
+
+                changeUserGreeting();
+
+            }
+
+            function changeUserGreeting()
+            {
+                document.getElementById("testerWelcome").innerHTML = "Welcome " + listInfo[0] + "! You are a gr." + listInfo[2] + " " + listInfo[3] + " and your email is " + listInfo[1];
             }
 
             function errData(err)
@@ -42,7 +56,6 @@
                 console.log(err);
             }
 
-            document.getElementById("testerWelcome").innerHTML = "Welcome " + user.displayName + "! You are a gr." +*/
 
           } else {
             // No user is signed in.
@@ -118,6 +131,8 @@
       Message:
       <input type = "text" id = "messageSent" />
       <button onclick = "updateMessage();">Submit Message</button>
+      <br>
+      <p id = "testerWelcome"></p>
       <div id = "loading">
       </div>
   </body>

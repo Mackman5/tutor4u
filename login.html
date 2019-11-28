@@ -22,7 +22,7 @@
     <script src="app.js"></script>
     <script>
         firebase.auth().onAuthStateChanged(function(user) {
-            if (user) {
+            if (user && user.emailVerified) {
                 try
                 {
                     var temp2 = (user.email).split("@");
@@ -64,8 +64,8 @@
                 }
                 setTimeout(function(){window.location.replace("index.html");}, 2000)
             } else {
-                alert("No user detected");
-                // No user is signed in.
+                //alert("No user detected");
+                // No user is signed in.a
             }
         });
 

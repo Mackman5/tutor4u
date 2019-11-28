@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>LOOK AT YOUR EMAIL!!!!!</title>
+
+    <script  src="https://www.gstatic.com/firebasejs/7.5.0/firebase-app.js"></script>
+
+    <!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
+    <script src="https://www.gstatic.com/firebasejs/7.5.0/firebase-analytics.js"></script>
+
+    <!-- Add Firebase products that you want to use -->
+    <script src="https://www.gstatic.com/firebasejs/7.5.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.5.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.5.0/firebase-database.js"></script>
+
+    <script src="app.js"></script>
+
+    <script>
+        function checkVerified(){
+
+            var user = firebase.auth().currentUser;
+            user.reload();
+            if(user && user.emailVerified){
+                alert("Thank you for verifying your email!");
+                window.location.replace("index.html");
+            }
+            else{
+                alert("You are not verified! Please check your email.");
+            }
+        }
+
+        function resendVerify(){
+            var user = firebase.auth().currentUser;
+            user.sendEmailVerification();
+        }
+    </script>
+</head>
+<body>
+<p>Your email has not been verified! Check your email or else...</p>
+<button onclick = "checkVerified();">I'm Verified!</button>
+<button onclick = "resendVerify();">Resend Verification Email</button>
+
+</body>
+</html>

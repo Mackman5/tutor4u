@@ -13,17 +13,19 @@ const firebaseConfig = {
 };
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
-firebase.analytics();
-const database = firebase.database();
+    firebase.analytics();
+    const database = firebase.database();
 
 //write to firebase function
 //thingToChange must be a valid thing, changeTo must be a string
 // E.x: fireWrite( "test", "Henlo");
-function fireWrite(thingToChange, changeTo) {
-    database.ref(thingToChange +  '/').set({
-        thingToChange: changeTo
-    });
+    function fireWrite(thingToChange, changeTo) {
+        database.ref(thingToChange +  '/').set({
+            thingToChange: changeTo
+        });
 }
+
+
 
 /*/Notification Request
 messaging.requestPermission()
@@ -37,3 +39,5 @@ console.log(token);
 .catch(function(err) {
     console.log('Error!');
 })*/
+
+//Nathan's password is "LookingAtMyPassword123"

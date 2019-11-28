@@ -22,11 +22,14 @@
       <script src="app.js"></script>
 
       <script>
+          var isLoggedIn;
+        var listInfo = [];
         firebase.auth().onAuthStateChanged(function(user) {
           if (user) {
+              isLoggedIn = true;
             document.getElementById("mainButton").innerHTML = "<button id = \"logout\" onclick = \"signUserOut()\">Logout</button>";
+            document.getElementById("toggleMessageUser").innerHTML = "<p style =\"color: #CCC\">User is currently signed in</p>";
 
-            var listInfo = [];
             var info = database.ref("auth/users/" + user.uid);
             info.on('value', obtainData, errData);
 
@@ -59,7 +62,9 @@
 
           } else {
             // No user is signed in.
+              isLoggedIn = false;
             document.getElementById("mainButton").innerHTML = "<a href = \"login.html\"><button id = \"get-started\">Get started</button></a>";
+              document.getElementById("toggleMessageUser").innerHTML = "<input type = \"text\" id = \"messageUser\"></p>";
           }
           document.getElementById("loading").style.display = "none";
         });
@@ -68,8 +73,8 @@
       <script>
           function signUserOut()
           {
-              firebase.auth().signOut().then(function() {
-                  // Sign-out successful.
+                  firebase.auth().signOut().then(function() {
+                      // Sign-out successful.
               }).catch(function(error) {
                   // An error happened.
               });
@@ -83,11 +88,20 @@
           function updateMessage()
           {
               temp = document.getElementById("message").innerHTML + "<br>";
-              //
-              database.ref('message/').set({
-                  userOrSomething: document.getElementById("messageUser").value,
-                  payloadOrSomething: document.getElementById("messageSent").value
-              });
+              // Write the data to firebase for messaging
+              if (isLoggedIn)
+              {
+                  var messageSender = String(listInfo[0]);
+              }
+              else
+              {
+                  var messageSender = String(document.getElementById("messageSent").value);
+              }
+                  database.ref('message/').set({
+                      userOrSomething: messageSender,
+                      payloadOrSomething: document.getElementById("messageSent").value
+                  });
+
               //
           }
           var messageRef = firebase.database().ref("message/");
@@ -103,6 +117,7 @@
                   realValues[i] = message[key[i]];
                   realValues[i] = realValues[i].replace(/</g, "< ")
               }
+
               document.getElementById("message").innerHTML = temp + " " + realValues[1] + ": " + realValues[0];
           }
           function errData(err)
@@ -126,9 +141,8 @@
       <p id = "message"> Messages Go Here </p>
       <br>
       <br>
-      Name:
-      <input type = "text" id = "messageUser">
-      Message:
+      <p style = "display:inline-block;">Name:&nbsp</p><p id = "toggleMessageUser" style = "display:inline-block;"><input type = "text" id = "messageUser"></p>
+      <p style = "display: inline-block;">&nbsp | Message:</p>
       <input type = "text" id = "messageSent" />
       <button onclick = "updateMessage();">Submit Message</button>
       <br>

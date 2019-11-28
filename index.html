@@ -101,7 +101,7 @@
                       userOrSomething: messageSender,
                       payloadOrSomething: document.getElementById("messageSent").value
                   });
-
+              document.getElementById("messageSent").value = "";
               //
           }
           var messageRef = firebase.database().ref("message/");

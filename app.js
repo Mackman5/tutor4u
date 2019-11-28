@@ -13,19 +13,22 @@ const firebaseConfig = {
 };
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
-    firebase.analytics();
-    const database = firebase.database();
+firebase.analytics();
+const database = firebase.database();
+// The Cloud Functions for Firebase SDK to create Cloud Functions and setup triggers.
+const functions = require('firebase-functions');
+
+// The Firebase Admin SDK to access the Firebase Realtime Database.
+const admin = require('firebase-admin');
 
 //write to firebase function
 //thingToChange must be a valid thing, changeTo must be a string
 // E.x: fireWrite( "test", "Henlo");
-    function fireWrite(thingToChange, changeTo) {
-        database.ref(thingToChange +  '/').set({
-            thingToChange: changeTo
-        });
+function fireWrite(thingToChange, changeTo) {
+    database.ref(thingToChange +  '/').set({
+        thingToChange: changeTo
+    });
 }
-
-
 
 /*/Notification Request
 messaging.requestPermission()
@@ -39,5 +42,3 @@ console.log(token);
 .catch(function(err) {
     console.log('Error!');
 })*/
-
-//Nathan's password is "LookingAtMyPassword123"

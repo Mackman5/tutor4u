@@ -62,7 +62,7 @@
                 {
                     console.log(err);
                 }
-                window.location.replace("index.html");
+                setTimeout(function(){window.location.replace("index.html");}, 2000)
             } else {
                 alert("No user detected");
                 // No user is signed in.

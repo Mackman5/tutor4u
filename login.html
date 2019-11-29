@@ -64,7 +64,6 @@
                 }
                 setTimeout(function(){window.location.replace("index.html");}, 2000)
             } else {
-                alert("No user detected");
                 // No user is signed in.
             }
         });
@@ -116,7 +115,7 @@
 
         function signUpSetup()
         {
-            document.getElementById("actionLink").innerHTML = "<a onclick = \"loginSetup();\">Login</a>";
+            document.getElementById("actionLink").innerHTML = "<a onclick = \"loginSetup();\" id = \"toggleLink\">Login</a>";
             document.getElementById("actionButton").innerHTML = "<button onclick = \"signUp()\" id = \"loginButton\">Sign Up</button>";
             document.getElementById("displayNameToggle").innerHTML = "Display Name: &nbsp;<input type = \"text\" name = \"displayName\" id = \"name_field\"/>";
             document.getElementById("gradeToggle").innerHTML = "Grade: &nbsp;<input type = \"number\" name = \"grade\" id = \"grade_field\"/>";
@@ -125,7 +124,7 @@
 
         function loginSetup()
         {
-            document.getElementById("actionLink").innerHTML = "<a onclick = \"signUpSetup();\">Sign Up</a>";
+            document.getElementById("actionLink").innerHTML = "<a onclick = \"signUpSetup();\" id = \"toggleLink\">Sign Up</a>";
             document.getElementById("actionButton").innerHTML = "<button onclick = \"login()\" id = \"loginButton\">Login</button>";
             document.getElementById("displayNameToggle").innerHTML = "";
             document.getElementById("gradeToggle").innerHTML = "";
@@ -151,7 +150,7 @@
 
     <p id = "roleToggle"></p>
 
-    <p id = "actionLink"><a onclick = "signUpSetup();">Sign Up</a></p>
+    <p id = "actionLink"><a onclick = "signUpSetup();" id = "toggleLink">Sign Up</a></p>
     <p id = "actionButton"><button onclick = "login()" id = "loginButton">Log In</button></p>
 </div>
 </body>

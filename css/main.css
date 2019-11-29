@@ -28,7 +28,7 @@ nav ul li
   margin-left: 24%;
 }
 
-#get-started, #logout, #loginButton, #signUpButton
+#get-started, #logout, #loginButton
 {
   background-color: #1e88e5;
   color: #FFFFFF;
@@ -85,4 +85,14 @@ a
   width: 75%;height: 450px;
   overflow: auto;
   margin-top: 130px;
+}
+
+#toggleLink:hover
+{
+  cursor: pointer;
+}
+
+#loginButton:hover
+{
+  cursor: pointer;
 }

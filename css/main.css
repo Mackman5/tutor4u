@@ -1,6 +1,8 @@
 body
 {
   font-family: 'H', 'Trebuchet MS', Helvetica, serif;
+  margin: 0;
+  padding: 0;
 }
 
 nav

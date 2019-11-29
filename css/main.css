@@ -111,3 +111,17 @@ a
 {
   cursor: pointer;
 }
+
+h1
+{
+  opacity: 100%;
+}
+
+#tutoring-top
+{
+  margin-top: 100px;
+  height: 400px;
+  background-image: url("../img/teaching.jpg");
+  opacity: 0.5;
+}
+

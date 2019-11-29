@@ -22,7 +22,6 @@
       <script src="app.js"></script>
 
       <script>
-        var objDiv = document.getElementById('message');
         var isLoggedIn;
         var listInfo = [];
         firebase.auth().onAuthStateChanged(function(user) {
@@ -120,7 +119,7 @@
               }
 
               document.getElementById("message").innerHTML = temp + " " + realValues[1] + ": " + realValues[0];
-              objDiv.scrollTop = objDiv.scrollHeight;
+              document.getElementById('message').scrollTop = document.getElementById('message').scrollHeight;
           }
           function errData(err)
           {

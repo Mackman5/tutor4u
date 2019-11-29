@@ -88,13 +88,18 @@
             var userEmail = document.getElementById("email_field").value;
             var userPass = document.getElementById("password_field").value;
 
-            firebase.auth().createUserWithEmailAndPassword(userEmail, userPass).catch(function(error) {
-                // Handle Errors here.
-                var errorCode = error.code;
-                var errorMessage = error.message;
-                alert("Sorry, " + errorMessage);
-                // ...
-            });
+            // sign in
+            var promise = firebase.auth().createUserWithEmailAndPassword(userEmail, userPass);
+            promise.then(function(authData) {// when email is successfully sent
+                authData.user.sendEmailVerification();
+                //alert("Verification email sent!");
+                window.location.replace("verify.html");
+            })
+
+                .catch(function(error) {
+                    // Handle Errors here.
+                    alert("Sorry, " + error.message);
+                });
             postSignUp();
         }
 
@@ -130,24 +135,24 @@
     </script>
 </head>
 <body>
-    <div id = "input-form">
+<div id = "input-form">
 
-        <p>Email: &nbsp;<input type = "text" name = "email" id = "email_field"/></p>
-        <br>
+    <p>Email: &nbsp;<input type = "text" name = "email" id = "email_field"/></p>
+    <br>
 
-        <p>Password: &nbsp;<input type = "password" name = "password" id = "password_field"/></p>
-        <br>
+    <p>Password: &nbsp;<input type = "password" name = "password" id = "password_field"/></p>
+    <br>
 
-        <p id = "displayNameToggle"></p>
-        <br>
+    <p id = "displayNameToggle"></p>
+    <br>
 
-        <p id = "gradeToggle"></p>
-        <br>
+    <p id = "gradeToggle"></p>
+    <br>
 
-        <p id = "roleToggle"></p>
+    <p id = "roleToggle"></p>
 
-        <p id = "actionLink"><a onclick = "signUpSetup();">Sign Up</a></p>
-        <p id = "actionButton"><button onclick = "login()" id = "loginButton">Log In</button></p>
-    </div>
+    <p id = "actionLink"><a onclick = "signUpSetup();">Sign Up</a></p>
+    <p id = "actionButton"><button onclick = "login()" id = "loginButton">Log In</button></p>
+</div>
 </body>
 </html>

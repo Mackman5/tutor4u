@@ -1,6 +1,8 @@
 body
 {
   font-family: 'H', 'Trebuchet MS', Helvetica, serif;
+  margin: 0;
+  padding: 0;
 }
 
 nav
@@ -8,9 +10,20 @@ nav
   position: fixed;
   top: 0;
   width: 100%;
+  height: 100px;
   background: linear-gradient(180deg,  rgba(255,255,255,1) 0%, rgba(247,247,247,1) 31%, rgba(237,237,237,1) 66%, rgba(235,235,235,1) 100%);
   border-bottom: solid thin black;
-  height: 100px;
+}
+
+nav a
+{
+  color: #000000;
+}
+
+nav a:hover
+{
+  cursor: col-resize;
+  color: #666;
 }
 
 nav ul li
@@ -25,10 +38,12 @@ nav ul li
 
 #mainButton
 {
-  margin-left: 24%;
+  position: absolute;
+  top: 30px;
+  right: 40px;
 }
 
-#get-started, #logout, #loginButton, #signUpButton
+#get-started, #logout, #loginButton
 {
   background-color: #1e88e5;
   color: #FFFFFF;
@@ -86,3 +101,27 @@ a
   overflow: auto;
   margin-top: 130px;
 }
+
+#toggleLink:hover
+{
+  cursor: pointer;
+}
+
+#loginButton:hover
+{
+  cursor: pointer;
+}
+
+h1
+{
+  opacity: 100%;
+}
+
+#tutoring-top
+{
+  margin-top: 100px;
+  height: 400px;
+  background-image: url("../img/teaching.jpg");
+  opacity: 0.5;
+}
+

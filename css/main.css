@@ -15,6 +15,17 @@ nav
   border-bottom: solid thin black;
 }
 
+nav a
+{
+  color: #000000;
+}
+
+nav a:hover
+{
+  cursor: col-resize;
+  color: #666;
+}
+
 nav ul li
 {
   display: inline-block;

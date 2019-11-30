@@ -13,43 +13,47 @@
 
     <!-- Add Firebase products that you want to use -->
     <script src="https://www.gstatic.com/firebasejs/7.5.0/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/7.5.0/firebase-firestore.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/7.5.0/firebase-database.js"></script>
 
+    <!--Adds script to initialize firebase-->
     <script src="app.js"></script>
 
     <script>
+        //checks if a user is on this page and has already been verified, if they are verified, sends the user to index.html
         firebase.auth().onAuthStateChanged(function(user) {
             if (user.emailVerified) {
                 window.location.replace("index.html");
             }
         });
 
-
+        //checks if the user is verified with firebase's check tag, if they are verified, they are kicked from the page to index
         function checkVerified(){
-
             var user = firebase.auth().currentUser;
+            user.reload();
             if(user && user.emailVerified){
+                //runs if the user is verified
                 alert("Thank you for verifying your email!");
                 window.location.replace("index.html");
 
             }
             else{
+                //runs when the user is not verified or there is no user
                 alert("You are not verified! Please check your email or try again.");
             }
         }
 
+        //resends verification email to user, triggered by button below
         function resendVerify(){
-            var user = firebase.auth().currentUser;
-            user.sendEmailVerification();
+            firebase.auth().currentUser.sendEmailVerification();
         }
     </script>
 </head>
 <body>
+
 <div id = verifyUI>
-    <p id = verifyText>Your email has not been verified! Check your email or else...</p>
+    <p id = verifyText>Your email has not been verified! Please check your email for a link to verify your account.</p>
     <button id = checkVerifyButton onclick = "checkVerified();">I'm Verified!</button>
     <button id = resendVerifyButton onclick = "resendVerify();">Resend Verification Email</button>
 </div>
+
 </body>
 </html>

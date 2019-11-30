@@ -27,9 +27,9 @@
 
       <script>
           //Make global variables #########################
-        var channel = "message"; //channel needs to be a valid channel or else it won't run/spaghetti initialize the getMessageData function
-        var isLoggedIn;
-        var listInfo = [];
+        var channel = "message"; // Channel needs to be a valid channel or else it won't run/spaghetti initialize the getMessageData function
+        var isLoggedIn; // Global variable to let us know if user is logged in or not
+        var listInfo = []; // Global list used to store basic user info locally
           //################################################
 
         firebase.auth().onAuthStateChanged(function(user) {

@@ -26,6 +26,7 @@
               crossorigin="anonymous"></script>
 
       <script>
+        var channel = "message";
         var isLoggedIn;
         var listInfo = [];
         firebase.auth().onAuthStateChanged(function(user) {
@@ -102,15 +103,15 @@
               {
                   var messageSender = String(document.getElementById("messageUser").value);
               }
-                  database.ref('message/').set({
+                  database.ref(channel + '/').set({
                       userOrSomething: messageSender,
                       payloadOrSomething: document.getElementById("messageSent").value
                   });
               document.getElementById("messageSent").value = "";
               //
           }
-          var messageRef = firebase.database().ref("message/");
-          messageRef.on('value', getData, errData);
+          var messageRef = firebase.database().ref(channel + '/');
+          firebase.database().ref(channel + '/').on('value', getData, errData);
           function getData(data)
           {
               var temp = document.getElementById("message").innerHTML + "<br>";
@@ -154,7 +155,11 @@
               });
           });
 
-
+          function updateChannel()
+          {
+              channel = document.getElementById("messageChannel").value.toString();
+              alert(channel);
+          }
 
       </script>
 
@@ -183,6 +188,8 @@
       <p style = "display: inline-block;">&nbsp | Message:</p>
       <input type = "text" id = "messageSent" />
       <button onclick = "updateMessage();">Submit Message</button>
+      <p>Channel: </p> <input type = "text" id = "messageChannel" />
+      <button onclick = "updateChannel();">Change Message</button>
       <br>
       <p id = "testerWelcome"></p>
       <div id = "loading">

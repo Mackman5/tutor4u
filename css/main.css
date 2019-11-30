@@ -81,6 +81,7 @@ a
 #name_field, #grade_field, #role_field
 {
   margin-top:5px;
+  text-align:left;
 }
 
 #input-form
@@ -160,4 +161,11 @@ h1
 #accountDropdown ul li a:hover
 {
   text-decoration: underline;
+}
+
+.input_field
+{
+  margin-left: 20px;
+  margin-bottom: 40px;
+  text-align: left;
 }

@@ -43,7 +43,7 @@ nav ul li
   right: 40px;
 }
 
-#get-started, #logout, #loginButton
+#get-started, #logout, #loginButton, #checkVerifyButton, #resendVerifyButton
 {
   background-color: #1e88e5;
   color: #FFFFFF;
@@ -123,5 +123,15 @@ h1
   height: 400px;
   background-image: url("../img/teaching.jpg");
   opacity: 0.5;
+}
+
+#verifyUI
+{
+  margin-top: 100px;
+  height: 400px;
+  background-image: url("../img/teaching.jpg");
+  opacity: 1;
+  text-align: center;
+
 }
 

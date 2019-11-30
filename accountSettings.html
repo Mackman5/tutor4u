@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tutor4u - User Settings</title>
+
+    <script  src="https://www.gstatic.com/firebasejs/7.5.0/firebase-app.js"></script>
+
+    <!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
+    <script src="https://www.gstatic.com/firebasejs/7.5.0/firebase-analytics.js"></script>
+
+    <!-- Add Firebase products that you want to use -->
+    <script src="https://www.gstatic.com/firebasejs/7.5.0/firebase-auth.js"></script>
+
+    <!--Adds script to initialize firebase-->
+    <script src="app.js"></script>
+
+    <script>
+
+
+        document.getElementById("emailText").innerHTML = "Email: " + listInfo[0] + "! You are a gr." + listInfo[2] + " " + listInfo[3] + " and your email is " + listInfo[1];
+
+    </script>
+
+</head>
+<body>
+<p id = emailText></p>
+</body>
+</html>

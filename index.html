@@ -27,7 +27,7 @@
         firebase.auth().onAuthStateChanged(function(user) {
           if (user) {
               isLoggedIn = true;
-            document.getElementById("mainButton").innerHTML = "<button id = \"logout\" onclick = \"signUserOut()\">Logout</button>";
+            document.getElementById("mainButton").innerHTML = "<button id = \"get-started\">My account</button>";
             document.getElementById("toggleMessageUser").innerHTML = "<p style =\"color: #CCC\">User is currently signed in</p>";
 
             var info = database.ref("auth/users/" + user.uid);
@@ -126,6 +126,7 @@
               console.log("Error!");
               console.log(err);
           }
+
       </script>
 
   </head>
@@ -139,6 +140,13 @@
           <li id = "mainButton"></li>
         </ul>
       </nav>
+      <div id = "accountDropdown">
+        <ul>
+            <li>Account Settings</li>
+            <br>
+            <li><a onclick = "signUserOut()" style = "cursor: pointer;">Logout</a></li>
+        </ul>
+      </div>
       <p id = "message"> Messages Go Here </p>
       <br>
       <br>

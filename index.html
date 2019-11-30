@@ -79,13 +79,17 @@
                   // An error happened.
               });
           }
+
+          //Do not need this
           function fireWrite(thingToChange, changeTo) {
               database.ref(thingToChange +  '/').set({
                   thingToChange: changeTo
               });
           }
+          //...
+
           var temp = "Start of messages! <br>";
-          function updateMessage()
+          function updateMessage(channel)
           {
               temp = document.getElementById("message").innerHTML + "<br>";
               // Write the data to firebase for messaging
@@ -97,7 +101,7 @@
               {
                   var messageSender = String(document.getElementById("messageUser").value);
               }
-                  database.ref('message/').set({
+                  database.ref(channel + '/').set({
                       userOrSomething: messageSender,
                       payloadOrSomething: document.getElementById("messageSent").value
                   });
@@ -140,12 +144,13 @@
         </ul>
       </nav>
       <p id = "message"> Messages Go Here </p>
+      <p id = "message2"> Messages Go Here </p>
       <br>
       <br>
       <p style = "display:inline-block;">Name:&nbsp</p><p id = "toggleMessageUser" style = "display:inline-block;"><input type = "text" id = "messageUser"></p>
       <p style = "display: inline-block;">&nbsp | Message:</p>
       <input type = "text" id = "messageSent" />
-      <button onclick = "updateMessage();">Submit Message</button>
+      <button onclick = "updateMessage('message');">Submit Message</button>
       <br>
       <p id = "testerWelcome"></p>
       <div id = "loading">

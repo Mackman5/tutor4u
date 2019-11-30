@@ -71,7 +71,6 @@
             document.getElementById("mainButton").innerHTML = "<a href = \"login.html\"><button id = \"get-started\">Get Started</button></a>";
               document.getElementById("toggleMessageUser").innerHTML = "<input type = \"text\" id = \"messageUser\"></p>";
           }
-          //document.getElementById("loading").style.display = "none";
         });
       </script>
 
@@ -85,12 +84,9 @@
               });
               $("#accountDropdown").hide();
           }
-          function fireWrite(thingToChange, changeTo) {
-              database.ref(thingToChange +  '/').set({
-                  thingToChange: changeTo
-              });
-          }
-          var temp = "Start of messages! <br>";
+
+          var temp = "Start of message history! <br>"; //sets the temp to prevent an error if text box is empty
+
           function updateMessage()
           {
               temp = document.getElementById("message").innerHTML + "<br>";
@@ -110,29 +106,31 @@
               document.getElementById("messageSent").value = "";
               //
           }
-          var messageRef = firebase.database().ref(channel + '/');
-          firebase.database().ref(channel + '/').on('value', getData, errData);
-          function getData(data)
+
+          firebase.database().ref(channel + '/').on('value', getMessageData, errData); //runs on change of firebase
+          function getMessageData(data) //Reads from firebase and updates the message chat
           {
-              var temp = document.getElementById("message").innerHTML + "<br>";
-              var message = data.val();
-              var key = Object.keys(message);
+              var temp = document.getElementById("message").innerHTML + "<br>"; // Remembers the old value of the message box to not overwrite things
+              var message = data.val(); //extracts data from firebase as an object
+              var key = Object.keys(message); //gets the keys to extract info from firebase
               var realValues = [];
               for (var i = 0; i < key.length; i++)
               {
-                  realValues[i] = message[key[i]];
-                  realValues[i] = realValues[i].replace(/</g, "< ")
+                  realValues[i] = message[key[i]]; // makes the reading friendly to having more than just a user and a payload
+                  realValues[i] = realValues[i].replace(/</g, "< "); //Prevents code injection by adding a space after the < symbol
               }
 
-              document.getElementById("message").innerHTML = temp + " " + realValues[1] + ": " + realValues[0];
-              document.getElementById('message').scrollTop = document.getElementById('message').scrollHeight;
+              document.getElementById("message").innerHTML = temp + " " + realValues[1] + ": " + realValues[0]; //updates the message box
+              document.getElementById('message').scrollTop = document.getElementById('message').scrollHeight; //scrolls to the bottom of the text box on message
           }
-          function errData(err)
+
+          function errData(err) //If theres an error in getMessageData it runs this
           {
               console.log("Error!");
               console.log(err);
           }
 
+          // J Query ##############################################
           function dropdown()
           {
               $("#accountDropdown").show();
@@ -154,11 +152,11 @@
                   e.stopPropagation();
               });
           });
+          //################################################################
 
-          function updateChannel()
+          function updateChannel() //updates the channel to read/write from when you click the button to do so
           {
               channel = document.getElementById("messageChannel").value.toString();
-              alert(channel);
           }
 
       </script>

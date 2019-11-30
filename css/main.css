@@ -22,7 +22,7 @@ nav a
 
 nav a:hover
 {
-  cursor: col-resize;
+  cursor: pointer;
   color: #666;
 }
 
@@ -40,10 +40,10 @@ nav ul li
 {
   position: absolute;
   top: 30px;
-  right: 40px;
+  right: 50px;
 }
 
-#get-started, #logout, #loginButton
+#get-started, #logout, #loginButton, #checkVerifyButton, #resendVerifyButton, #input-home
 {
   background-color: #1e88e5;
   color: #FFFFFF;
@@ -110,4 +110,43 @@ a
 #loginButton:hover
 {
   cursor: pointer;
+}
+
+h1
+{
+  opacity: 100%;
+}
+
+#tutoring-top
+{
+  margin-top: 100px;
+  height: 400px;
+  background-image: url("../img/teaching.jpg");
+  opacity: 0.5;
+}
+
+#verifyUI
+{
+  margin-top: 100px;
+  height: 400px;
+  background-image: url("../img/teaching.jpg");
+  opacity: 1;
+  text-align: center;
+
+}
+
+#accountDropdown
+{
+  margin-top: -35px;
+  float: right;
+  margin-right: 35px;
+  border: solid thin black;
+  text-align: center;
+  width: 150px
+}
+
+#accountDropdown ul
+{
+  margin-right: 35px;
+  list-style: none;
 }

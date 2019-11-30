@@ -60,9 +60,13 @@
                         console.log("Error!");
                         console.log(err);
                     }
-                }catch(err)
-                {
-                    console.log(err);
+
+                    if(user.emailVerified){
+                    window.location.replace("verify.html");}
+                }
+
+                catch(err) {
+                    console.log(err.message);
                 }
 
 

@@ -97,50 +97,6 @@
               $("#accountDropdown").hide();
           }
 
-          var temp = "Start of message history! <br>"; //Sets the temp to prevent an error if text box is empty
-
-          function updateMessage()
-          {
-              //Creates a temporary variable containing all previous content inside the message box
-              temp = document.getElementById("message").innerHTML + "<br>";
-              //Checks to see if user is logged in
-              if (isLoggedIn)
-              {
-                  //Makes user's name equal to their display name using the global userInfo list
-                  var messageSender = String(listInfo[0]);
-              }
-              else
-              {
-                  //Makes user's name the custom name they provided in the text box
-                  var messageSender = String(document.getElementById("messageUser").value);
-              }
-              //Writes to database using the custom channel directory provided by the user stored in global variable channel that is updated in updateChannel function
-                  database.ref(channel + '/').set({
-                      userOrSomething: messageSender,
-                      payloadOrSomething: document.getElementById("messageSent").value
-                  });
-              //Clears the message box for better UI and ease of use
-              document.getElementById("messageSent").value = "";
-              //
-          }
-
-          firebase.database().ref(channel + '/').on('value', getMessageData, errData); //Runs on change of firebase
-          function getMessageData(data) //Reads from firebase and updates the message chat
-          {
-              var temp = document.getElementById("message").innerHTML + "<br>"; // Remembers the old value of the message box to not overwrite things
-              var message = data.val(); // Extracts data from firebase as an object
-              var key = Object.keys(message); // Gets the keys to extract info from firebase
-              var realValues = []; // List used to store all the extracted data from the reading of the firebase database object
-              //For loop to iterate through all the keys that were extracted
-              for (var i = 0; i < key.length; i++)
-              {
-                  realValues[i] = message[key[i]]; // Writes the sender to realValues lis the first iteration and the message itself the second iteration
-                  realValues[i] = realValues[i].replace(/</g, "< "); //Prevents code injection by adding a space after the < symbol
-              }
-
-              document.getElementById("message").innerHTML = temp + " " + realValues[1] + ": " + realValues[0]; // Updates the message box
-              document.getElementById('message').scrollTop = document.getElementById('message').scrollHeight; // Scrolls to the bottom of the text box on message
-          }
 
           function errData(err) //Error function that runs if there's an error reading the firebase database
           {
@@ -157,6 +113,10 @@
 
           //Waits until the html document is ready to run
           $(document).ready(function(){
+              $("#loading").hide();
+
+              $('#first-div').fadeIn(750);
+
               //When the user clicks, it always hides the account dropdown unless stopped by the next two jQuery functions
               $(document).click(function(){
                   $("#accountDropdown").hide();
@@ -169,45 +129,44 @@
               $("nav").click(function(e){
                   e.stopPropagation();
               });
+
+              var documentEL = $(document),
+                  fadeElem = $("#first-div");
+              documentEL.on("scroll", function(){
+                var currScrollPos = documentEL.scrollTop();
+                fadeElem.each(function() {
+                    var $this = $(this),
+                        elemOffsetTop = $this.offset().top;
+                    if ((currScrollPos + 200) > elemOffsetTop) $this.css("opacity", 1-((currScrollPos + 200) - elemOffsetTop)/300)
+                });
+              });
           });
           //################################################################
 
-          function updateChannel() // Runs when the bottom submit channel but is clicked
-          {
-              channel = document.getElementById("messageChannel").value.toString(); //Updates global chanel variable to the value submitted by the user
-          }
 
       </script>
 
   </head>
   <body>
-      <nav>
-        <ul>
-          <li class = "left-nav"><a href = "index.html"><h1>Tutor for you</h1></a></li>
-          <li class = "left-nav"><a href = "tutoring.html"><h2>Tutoring</h2></a></li>
-          <li class = "left-nav"><a href = "options.html"><h2>Options</h2></a></li>
-          <li class = "left-nav"><a href = "about.html"><h2>About</h2></a></li>
-          <li id = "mainButton"></li>
-        </ul>
-      </nav>
       <div id = "accountDropdown">
         <ul>
-            <li><a onclick = "signUserOut()" style = "cursor: pointer;">Account Settings</a></li>
+            <li><a href = "accountSettings.html" style = "cursor: pointer;">Account Settings</a></li>
             <br>
             <li><a onclick = "signUserOut()" style = "cursor: pointer;">Logout</a></li>
         </ul>
       </div>
-      <p id = "message"> Messages Go Here </p>
-      <br>
-      <br>
-      <p style = "display:inline-block;">Name:&nbsp</p><p id = "toggleMessageUser" style = "display:inline-block;"><input type = "text" id = "messageUser"></p>
-      <p style = "display: inline-block;">&nbsp | Message:</p>
-      <input type = "text" id = "messageSent" />
-      <button onclick = "updateMessage();">Submit Message</button>
-      <p>Channel: </p> <input type = "text" id = "messageChannel" />
-      <button onclick = "updateChannel();">Change Message</button>
-      <br>
       <p id = "testerWelcome"></p>
+      <div id = "first-div"><h2>Look at me faaaade</h2></div>
+      <nav>
+          <ul>
+              <li class = "left-nav"><a href = "index.html"><h1>Tutor for you</h1></a></li>
+              <li class = "left-nav"><a href = "tutoring.html"><h2>Tutoring</h2></a></li>
+              <li class = "left-nav"><a href = "options.html"><h2>Options</h2></a></li>
+              <li class = "left-nav"><a href = "about.html"><h2>About</h2></a></li>
+              <li class = "left-nav"><a href = "messaging.html"><h2>Messaging</h2></a></li>
+              <li id = "mainButton"></li>
+          </ul>
+      </nav>
       <div id = "loading">
       </div>
   </body>

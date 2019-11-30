@@ -68,8 +68,15 @@
                 {
                     console.log(err);
                 }
-                //Waits for 2 seconds to ensure database writing is successful then redirects user to email verification page
-                setTimeout(function(){window.location.replace("verify.html");}, 2000)
+                if (user.emailVerified){
+                    setTimeout(function(){window.location.replace("index.html");}, 1250); //Waits for 2 seconds to ensure database writing is successful then redirects user to home page
+                }
+                else
+                {
+                    setTimeout(function(){window.location.replace("verify.html");}, 1250); //Waits for 2 seconds to ensure database writing is successful then redirects user to email verification page
+                }
+
+
             } else {
                 // Runs when no user is signed in.
             }

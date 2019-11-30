@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang = "en">
+<head>
+    <title>Tutor4u - Home</title>
+    <meta charset = "utf-8" />
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+
+    <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+    <script  src="https://www.gstatic.com/firebasejs/7.5.0/firebase-app.js"></script>
+
+    <!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
+    <script src="https://www.gstatic.com/firebasejs/7.5.0/firebase-analytics.js"></script>
+
+    <!-- Add Firebase products that you want to use -->
+    <script src="https://www.gstatic.com/firebasejs/7.5.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.5.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.5.0/firebase-messaging.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.5.0/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.5.0/firebase-database.js"></script>
+
+
+    <script src="app.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"
+            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+            crossorigin="anonymous"></script>
+
+    <script>
+        //Make global variables #########################
+        var channel = "message"; // Channel needs to be a valid channel or else it won't run/spaghetti initialize the getMessageData function
+        var isLoggedIn; // Global variable to let us know if user is logged in or not
+        var listInfo = []; // Global list used to store basic user info locally
+        //################################################
+
+        firebase.auth().onAuthStateChanged(function(user) {
+            if (user) {
+                //Runs when user is logged in
+                isLoggedIn = true; // Sets global isLoggedIn variable to true
+                document.getElementById("mainButton").innerHTML = "<button id = \"get-started\" onclick = \"dropdown();\">My account</button>"; // Changes main button to my account instead of get started button
+                document.getElementById("toggleMessageUser").innerHTML = "<p style =\"color: #CCC\">User is currently signed in</p>"; // Removes option to change your name in the chat
+
+                var info = database.ref("auth/users/" + user.uid); //Prepares a directory to read user info from database user user id
+                info.on('value', obtainBasicUserData, errData); //Reads user info
+
+                function obtainBasicUserData(pData)
+                {
+                    //Runs when starting to read user info
+                    //Parsing object from database data
+                    var userData = pData.val();
+                    //Getting the keys needed to get the data from teh object just generated
+                    var userDataKeys = Object.keys(userData);
+
+                    //For loop to iterate through all the keys
+                    for (var i = 0; i < userDataKeys.length; i++)
+                    {
+                        //Sets variable userK to the current key
+                        var userK = userDataKeys[i];
+                        //Pushes data corresponding the the userK key to the global listInfo list
+                        listInfo.push(userData[userK]);
+                    }
+
+                    //Runs change user greeting function
+                    changeUserGreeting();
+
+                }
+
+                function changeUserGreeting() //Updates welcome message after user data is globally stored in listInfo list
+                {
+                    //Updates the greeting using the global listInfo list
+                    document.getElementById("testerWelcome").innerHTML = "Welcome " + listInfo[0] + "! You are a gr." + listInfo[2] + " " + listInfo[3] + " and your email is " + listInfo[1];
+                }
+
+
+            } else {
+                // Runs when no user is signed in
+                //Changes global isLoggedIn variable to false
+                isLoggedIn = false;
+                //Changes button to get started instead of my account to allow for account login or creation
+                document.getElementById("mainButton").innerHTML = "<a href = \"login.html\"><button id = \"get-started\">Get Started</button></a>";
+                //Allows user to input custom name since they aren't logged in
+                document.getElementById("toggleMessageUser").innerHTML = "<input type = \"text\" id = \"messageUser\"></p>";
+            }
+        });
+    </script>
+
+    <script>
+        //Runs after logout link is clicked
+        function signUserOut()
+        {
+            //Firebase signs them out
+            firebase.auth().signOut().then(function() {
+                // Sign-out successful.
+            }).catch(function(error) {
+                // An error happened
+            });
+            //Hides the account dropdown menu
+            $("#accountDropdown").hide();
+        }
+
+        var temp = "Start of message history! <br>"; //Sets the temp to prevent an error if text box is empty
+
+        function updateMessage()
+        {
+            //Creates a temporary variable containing all previous content inside the message box
+            temp = document.getElementById("message").innerHTML + "<br>";
+            //Checks to see if user is logged in
+            if (isLoggedIn)
+            {
+                //Makes user's name equal to their display name using the global userInfo list
+                var messageSender = String(listInfo[0]);
+            }
+            else
+            {
+                //Makes user's name the custom name they provided in the text box
+                var messageSender = String(document.getElementById("messageUser").value);
+            }
+            //Writes to database using the custom channel directory provided by the user stored in global variable channel that is updated in updateChannel function
+            database.ref(channel + '/').set({
+                userOrSomething: messageSender,
+                payloadOrSomething: document.getElementById("messageSent").value
+            });
+            //Clears the message box for better UI and ease of use
+            document.getElementById("messageSent").value = "";
+            //
+        }
+
+        firebase.database().ref(channel + '/').on('value', getMessageData, errData); //Runs on change of firebase
+        function getMessageData(data) //Reads from firebase and updates the message chat
+        {
+            var temp = document.getElementById("message").innerHTML + "<br>"; // Remembers the old value of the message box to not overwrite things
+            var message = data.val(); // Extracts data from firebase as an object
+            var key = Object.keys(message); // Gets the keys to extract info from firebase
+            var realValues = []; // List used to store all the extracted data from the reading of the firebase database object
+            //For loop to iterate through all the keys that were extracted
+            for (var i = 0; i < key.length; i++)
+            {
+                realValues[i] = message[key[i]]; // Writes the sender to realValues lis the first iteration and the message itself the second iteration
+                realValues[i] = realValues[i].replace(/</g, "< "); //Prevents code injection by adding a space after the < symbol
+            }
+
+            document.getElementById("message").innerHTML = temp + " " + realValues[1] + ": " + realValues[0]; // Updates the message box
+            document.getElementById('message').scrollTop = document.getElementById('message').scrollHeight; // Scrolls to the bottom of the text box on message
+        }
+
+        function errData(err) //Error function that runs if there's an error reading the firebase database
+        {
+            console.log("Error!");
+            console.log(err);
+        }
+        //################################################################
+
+        function updateChannel() // Runs when the bottom submit channel but is clicked
+        {
+            channel = document.getElementById("messageChannel").value.toString(); //Updates global chanel variable to the value submitted by the user
+        }
+
+    </script>
+
+</head>
+<body>
+<nav>
+    <ul>
+        <li class = "left-nav"><a href = "index.html"><h1>Tutor for you</h1></a></li>
+        <li class = "left-nav"><a href = "tutoring.html"><h2>Tutoring</h2></a></li>
+        <li class = "left-nav"><a href = "options.html"><h2>Options</h2></a></li>
+        <li class = "left-nav"><a href = "about.html"><h2>About</h2></a></li>
+        <li class = "left-nav"><a href = "messaging.html"><h2>Messaging</h2></a></li>
+    </ul>
+</nav>
+<p id = "message"> Messages Go Here </p>
+<br>
+<br>
+<p style = "display:inline-block;">Name:&nbsp</p><p id = "toggleMessageUser" style = "display:inline-block;"><input type = "text" id = "messageUser"></p>
+<p style = "display: inline-block;">&nbsp | Message:</p>
+<input type = "text" id = "messageSent" />
+<button onclick = "updateMessage();">Submit Message</button>
+<p>Channel: </p> <input type = "text" id = "messageChannel" />
+<button onclick = "updateChannel();">Change Message</button>
+<br>
+<div id = "loading">
+</div>
+</body>
+</html>

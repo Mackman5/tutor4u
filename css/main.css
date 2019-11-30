@@ -40,10 +40,10 @@ nav ul li
 {
   position: absolute;
   top: 30px;
-  right: 60px;
+  right: 40px;
 }
 
-#get-started, #logout, #loginButton
+#get-started, #logout, #loginButton, #checkVerifyButton, #resendVerifyButton
 {
   background-color: #1e88e5;
   color: #FFFFFF;
@@ -71,6 +71,16 @@ a
 #email_field
 {
   margin-top: 30px;
+}
+
+#password_field
+{
+  margin-top: 5px;
+}
+
+#name_field, #grade_field, #role_field
+{
+  margin-top:5px;
 }
 
 #input-form
@@ -115,34 +125,13 @@ h1
   opacity: 0.5;
 }
 
-.input_field
+#verifyUI
 {
-  margin-bottom: 50px;
-}
-
-#loginButton
-{
-  margin-top: -30px;
-}
-
-#toggleLink
-{
-  margin-top: -100px;
-}
-
-#accountDropdown
-{
-  width: 150px;
-  margin-right: 45px;
-  margin-top: -35px;
+  margin-top: 100px;
+  height: 400px;
+  background-image: url("../img/teaching.jpg");
+  opacity: 1;
   text-align: center;
-  float:right;
-  border: solid thin black;
-  display: flex;
+
 }
 
-#accountDropdown ul
-{
-  margin-right: 40px;
-  list-style: none;
-}

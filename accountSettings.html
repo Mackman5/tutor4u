@@ -23,6 +23,8 @@
 
     <script>
 
+        $("#changeEmailForm").hide();
+
         var listInfo = []; // Global list used to store basic user info locally
         var fUser;
         firebase.auth().onAuthStateChanged(function(user) {
@@ -94,13 +96,12 @@
 <body>
 <p id = emailText></p>
 <button id = goToVerifyBtn onclick = window.location.replace("verify.html");>Verify My Account</button>
-<button id = changeEmailBtn onclick = "changeEmail();">Change Emails</button>
+<button id = changeEmailBtn onclick = "$('#changeEmailForm').show();">Change Emails</button>
 <div id = changeEmailForm>
     <p class = "input_field">Sign in Email: &nbsp;<input type = "text" name = "email" id = "email_field"/><br></p>
     <p class = "input_field">Password: &nbsp;<input type = "text" name = "password" id = "pass_field"/><br></p>
-
-
     <p class = "input_field">New Email: &nbsp;<input type = "text" name = "email" id = "new_email_field"/><br></p>
+    <button id = confirmEmailChangeBtn onclick="changeEmail();">Confirm Changes</button>
 
 </div>
 

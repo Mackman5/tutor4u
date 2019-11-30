@@ -21,6 +21,10 @@
 
       <script src="app.js"></script>
 
+      <script src="https://code.jquery.com/jquery-3.2.1.min.js"
+              integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+              crossorigin="anonymous"></script>
+
       <script>
         var channel = "message";
         var isLoggedIn;
@@ -28,7 +32,7 @@
         firebase.auth().onAuthStateChanged(function(user) {
           if (user) {
               isLoggedIn = true;
-            document.getElementById("mainButton").innerHTML = "<button id = \"get-started\">My account</button>";
+            document.getElementById("mainButton").innerHTML = "<button id = \"get-started\" onclick = \"dropdown();\">My account</button>";
             document.getElementById("toggleMessageUser").innerHTML = "<p style =\"color: #CCC\">User is currently signed in</p>";
 
             var info = database.ref("auth/users/" + user.uid);
@@ -74,21 +78,18 @@
       <script>
           function signUserOut()
           {
-                  firebase.auth().signOut().then(function() {
+              firebase.auth().signOut().then(function() {
                       // Sign-out successful.
               }).catch(function(error) {
                   // An error happened.
               });
+              $("#accountDropdown").hide();
           }
-
-          //Do not need this
           function fireWrite(thingToChange, changeTo) {
               database.ref(thingToChange +  '/').set({
                   thingToChange: changeTo
               });
           }
-          //...
-
           var temp = "Start of messages! <br>";
           function updateMessage()
           {
@@ -108,14 +109,11 @@
                   });
               document.getElementById("messageSent").value = "";
               //
-
           }
-
-          database.ref(channel + "/").on('value', getData, errData);
-
+          var messageRef = firebase.database().ref(channel + '/');
+          firebase.database().ref(channel + '/').on('value', getData, errData);
           function getData(data)
           {
-              alert("run get dad");
               var temp = document.getElementById("message").innerHTML + "<br>";
               var message = data.val();
               var key = Object.keys(message);
@@ -123,7 +121,7 @@
               for (var i = 0; i < key.length; i++)
               {
                   realValues[i] = message[key[i]];
-                  realValues[i] = realValues[i].replace(/</g, "< ");
+                  realValues[i] = realValues[i].replace(/</g, "< ")
               }
 
               document.getElementById("message").innerHTML = temp + " " + realValues[1] + ": " + realValues[0];
@@ -134,6 +132,28 @@
               console.log("Error!");
               console.log(err);
           }
+
+          function dropdown()
+          {
+              $("#accountDropdown").show();
+          }
+
+          $(document).ready(function(){
+              /* Anything that gets to the document
+                 will hide the dropdown */
+              $(document).click(function(){
+                  $("#accountDropdown").hide();
+              });
+
+              /* Clicks within the dropdown won't make
+                 it past the dropdown itself */
+              $("#accountDropdown").click(function(e){
+                  e.stopPropagation();
+              });
+              $("nav").click(function(e){
+                  e.stopPropagation();
+              });
+          });
 
           function updateChannel()
           {
@@ -156,7 +176,7 @@
       </nav>
       <div id = "accountDropdown">
         <ul>
-            <li>Account Settings</li>
+            <li><a onclick = "signUserOut()" style = "cursor: pointer;">Account Settings</a></li>
             <br>
             <li><a onclick = "signUserOut()" style = "cursor: pointer;">Logout</a></li>
         </ul>
@@ -169,7 +189,7 @@
       <input type = "text" id = "messageSent" />
       <button onclick = "updateMessage();">Submit Message</button>
       <p>Channel: </p> <input type = "text" id = "messageChannel" />
-      <button onclick = "updateChannel();">Submit Message</button>
+      <button onclick = "updateChannel();">Change Message</button>
       <br>
       <p id = "testerWelcome"></p>
       <div id = "loading">

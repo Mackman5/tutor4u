@@ -40,10 +40,10 @@ nav ul li
 {
   position: absolute;
   top: 30px;
-  right: 40px;
+  right: 50px;
 }
 
-#get-started, #logout, #loginButton, #checkVerifyButton, #resendVerifyButton
+#get-started, #logout, #loginButton, #checkVerifyButton, #resendVerifyButton, #input-home
 {
   background-color: #1e88e5;
   color: #FFFFFF;
@@ -136,3 +136,28 @@ h1
 
 }
 
+#accountDropdown
+{
+  position: fixed;
+  height: 110px;
+  right: 60px;
+  top: 70px;
+  float: right;
+  border: solid 0.01em black;
+  text-align: center;
+  width: 100px;
+  display: none;
+  background-color: white;
+}
+
+#accountDropdown ul
+{
+  position: relative;
+  right: 20px;
+  list-style: none;
+}
+
+#accountDropdown ul li a:hover
+{
+  text-decoration: underline;
+}

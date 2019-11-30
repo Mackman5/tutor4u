@@ -18,7 +18,6 @@
     <script src="https://www.gstatic.com/firebasejs/7.5.0/firebase-analytics.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.5.0/firebase-database.js"></script>
 
-
     <script src="app.js"></script>
 
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"
@@ -28,69 +27,81 @@
     <script>
         firebase.auth().onAuthStateChanged(function(user) {
             if (user) {
+                //Runs when user is logged in
                 try
                 {
+                    //Get temporary database reference with first part of email
                     var temp2 = (user.email).split("@");
+                    //Setting reference to write new and permanent file using user id
                     var tempRef = database.ref("auth/");
-                    tempRef.on('value', getData, errData);
-                    function getData(data)
+                    //Start writing process
+                    tempRef.on('value', getUserData, errData);
+                    //Function to parse data
+                    function getUserData(data)
                     {
+                        //Extracting data from firebase database as an object
                         var userInfo = data.val();
+                        //Obtaining keys for the data
                         var keys = Object.keys(userInfo);
 
-
+                        //For loop to iterate through every key in the directory
                         for (var i = 0; i < keys.length; i++)
                         {
+                            //Sets variable k to the current key
                             var k = keys[i];
+                            //Checks to see if the key is equal to the temporary database
                             if (k === temp2[0])
                             {
+                                //Creates new directory in auth node called the user id and writes all basic user info in it
                                 database.ref("auth/users/" + user.uid + "/").set({
                                     displayName: userInfo[k].displayName,
                                     email: userInfo[k].email,
                                     grade: userInfo[k].grade,
                                     role : userInfo[k].role
                                 });
+                                //Removes old temporary node
                                 database.ref("auth/" + temp2[0]).remove();
                             }
                         }
                     }
-
-                    function errData(err)
-                    {
-                        console.log("Error!");
-                        console.log(err);
-                    }
-
-                    if(user.emailVerified){
-                    window.location.replace("verify.html");}
+                }catch(err)
+                {
+                    console.log(err);
                 }
-
-                catch(err) {
-                    console.log(err.message);
-                }
-
-
-            else {
-                // No user is signed in.
+                //Waits for 2 seconds to ensure database writing is successful then redirects user to email verification page
+                setTimeout(function(){window.location.replace("verify.html");}, 2000)
+            } else {
+                // Runs when no user is signed in.
             }
         });
 
+        //Error function for errors that occur while reading data
+        function errData(err)
+        {
+            console.log("Error!");
+            console.log(err);
+        }
+
+        //Function that runs when the login button is clicked
         function login()
         {
+            //Gets values of email and password text inputs
             var userEmail = document.getElementById("email_field").value;
             var userPass = document.getElementById("password_field").value;
 
+            //Starts firebase sign in process
             firebase.auth().signInWithEmailAndPassword(userEmail, userPass).catch(function(error) {
-                // Handle Errors here.
+                //Handle Errors here
                 var errorCode = error.code;
                 var errorMessage = error.message;
                 alert("Sorry, " + errorMessage);
-                // ...
             });
         }
 
+        //Function that runs after sign up button is clicked
         function signUp()
         {
+            //Gets values of email and password text inputs
             var userEmail = document.getElementById("email_field").value;
             var userPass = document.getElementById("password_field").value;
 
@@ -119,16 +130,12 @@
             });
         }
 
-        function signUpSetup()
-        {
+        function signUpSetup() {
             document.getElementById("actionLink").innerHTML = "<a onclick = \"loginSetup();\" id = \"toggleLink\">Login</a>";
             document.getElementById("actionButton").innerHTML = "<button onclick = \"signUp()\" id = \"loginButton\">Sign Up</button>";
             $("#displayNameToggle").show();
             $("#gradeToggle").show();
             $("#roleToggle").show();
-            //document.getElementById("displayNameToggle").innerHTML = "Display Name: &nbsp;<input type = \"text\" name = \"displayName\" id = \"name_field\"/>";
-            //document.getElementById("gradeToggle").innerHTML = "Grade: &nbsp;<input type = \"number\" name = \"grade\" id = \"grade_field\"/>";
-            //document.getElementById("roleToggle").innerHTML = "Role: &nbsp;<input type = \"text\" name = \"role\" id = \"role_field\"/>";
         }
 
         function loginSetup()
@@ -138,9 +145,6 @@
             $("#displayNameToggle").hide();
             $("#gradeToggle").hide();
             $("#roleToggle").hide();
-            //document.getElementById("displayNameToggle").innerHTML = "";
-            //document.getElementById("gradeToggle").innerHTML = "";
-            //document.getElementById("roleToggle").innerHTML = "";
         }
         $(document).ready(() => {
             $("#displayNameToggle").hide();

@@ -17,6 +17,13 @@
     <!--Adds script to initialize firebase-->
     <script src="app.js"></script>
 
+    <style>
+        body
+        {
+            background-color: #DDD;
+        }
+    </style>
+
     <script>
         //checks if a user is on this page and has already been verified, if they are verified, sends the user to index.html
         firebase.auth().onAuthStateChanged(function(user) {

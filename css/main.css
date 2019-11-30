@@ -55,6 +55,12 @@ nav ul li
   right: 10px;
 }
 
+#checkVerifyButton, #resendVerifyButton
+{
+  margin-top: 50px;
+  border: solid 0.1em black;
+}
+
 #loading
 {
   background-color: white;
@@ -129,12 +135,15 @@ h1
 
 #verifyUI
 {
-  margin-top: 100px;
+  margin: 150px auto 0;
   height: 400px;
+  width: 300px;
   background-image: url("../img/teaching.jpg");
   opacity: 1;
   text-align: center;
-
+  padding: 30px;
+  border-radius: 10px;
+  border: solid 0.1em black;
 }
 
 #accountDropdown

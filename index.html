@@ -26,9 +26,12 @@
               crossorigin="anonymous"></script>
 
       <script>
-        var channel = "message";
+          //Make global variables #########################
+        var channel = "message"; //channel needs to be a valid channel or else it won't run/spaghetti initialize the getMessageData function
         var isLoggedIn;
         var listInfo = [];
+          //################################################
+
         firebase.auth().onAuthStateChanged(function(user) {
           if (user) {
               isLoggedIn = true;
@@ -53,15 +56,9 @@
 
             }
 
-            function changeUserGreeting()
+            function changeUserGreeting() //update the welcome message || temporary
             {
                 document.getElementById("testerWelcome").innerHTML = "Welcome " + listInfo[0] + "! You are a gr." + listInfo[2] + " " + listInfo[3] + " and your email is " + listInfo[1];
-            }
-
-            function errData(err)
-            {
-                console.log("Error!");
-                console.log(err);
             }
 
 

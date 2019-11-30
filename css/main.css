@@ -137,16 +137,26 @@ h1
 
 #accountDropdown
 {
-  margin-top: -35px;
+  position: fixed;
+  height: 110px;
+  right: 60px;
+  top: 70px;
   float: right;
-  margin-right: 35px;
-  border: solid thin black;
+  border: solid 0.01em black;
   text-align: center;
-  width: 150px
+  width: 100px;
+  display: none;
+  background-color: white;
 }
 
 #accountDropdown ul
 {
-  margin-right: 35px;
+  position: relative;
+  right: 20px;
   list-style: none;
+}
+
+#accountDropdown ul li a:hover
+{
+  text-decoration: underline;
 }

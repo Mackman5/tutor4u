@@ -95,8 +95,8 @@ a
   text-align: center;
   border-radius: 20px;
   padding: 30px;
-  width: 300px;
-  height: 500px;
+  width: 350px;
+  height: 600px;
   margin: 8% auto;
   background-color: #B5D6FB;
 
@@ -165,6 +165,11 @@ h1
   position: relative;
   right: 20px;
   list-style: none;
+}
+
+#accountDropdown ul li a
+{
+  color: black;
 }
 
 #accountDropdown ul li a:hover

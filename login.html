@@ -25,55 +25,33 @@
             crossorigin="anonymous"></script>
 
     <script>
-        firebase.auth().onAuthStateChanged(function(user) {
+            firebase.auth().onAuthStateChanged(function(user) {
             if (user) {
                 //Runs when user is logged in
                 try
                 {
-                    //Get temporary database reference with first part of email
-                    var temp2 = (user.email).split("@");
-                    //Setting reference to write new and permanent file using user id
-                    var tempRef = database.ref("auth/");
-                    //Start writing process
-                    tempRef.on('value', getUserData, errData);
-                    //Function to parse data
-                    function getUserData(data)
-                    {
-                        //Extracting data from firebase database as an object
-                        var userInfo = data.val();
-                        //Obtaining keys for the data
-                        var keys = Object.keys(userInfo);
 
-                        //For loop to iterate through every key in the directory
-                        for (var i = 0; i < keys.length; i++)
-                        {
-                            //Sets variable k to the current key
-                            var k = keys[i];
-                            //Checks to see if the key is equal to the temporary database
-                            if (k === temp2[0])
-                            {
-                                //Creates new directory in auth node called the user id and writes all basic user info in it
-                                database.ref("auth/users/" + user.uid + "/").set({
-                                    displayName: userInfo[k].displayName,
-                                    email: userInfo[k].email,
-                                    grade: userInfo[k].grade,
-                                    role : userInfo[k].role
-                                });
-                                //Removes old temporary node
-                                database.ref("auth/" + temp2[0]).remove();
-                            }
-                        }
-                    }
+                    database.ref("auth/users/" + user.uid + "/").set({
+                        displayName: localStorage.getItem("userDisplayNameLocal"),
+                        email: localStorage.getItem("userEmailLocal"),
+                        grade: localStorage.getItem("userGradeLocal"),
+                        role : localStorage.getItem("userRoleLocal")
+                    });
+                    localStorage.removeItem("userDisplayNameLocal");
+                    localStorage.removeItem("userEmailLocal");
+                    localStorage.removeItem("userGradeLocal");
+                    localStorage.removeItem("userRoleLocal");
+
                 }catch(err)
                 {
                     console.log(err);
                 }
                 if (user.emailVerified){
-                    setTimeout(function(){window.location.replace("index.html");}, 1250); //Waits for 2 seconds to ensure database writing is successful then redirects user to home page
+                    window.location.replace("index.html"); //Waits for 2 seconds to ensure database writing is successful then redirects user to home page
                 }
                 else
                 {
-                    setTimeout(function(){window.location.replace("verify.html");}, 1250); //Waits for 2 seconds to ensure database writing is successful then redirects user to email verification page
+                    window.location.replace("verify.html"); //Waits for 2 seconds to ensure database writing is successful then redirects user to email verification page
                 }
 
 
@@ -109,36 +87,43 @@
         function signUp()
         {
             //Gets values of email and password text inputs
-            var userEmail = document.getElementById("email_field").value;
-            var userPass = document.getElementById("password_field").value;
+            if (document.getElementById("password_field").value.toString() === document.getElementById("confirm_password_field").value.toString())
+            {
+                var userEmail = document.getElementById("email_field").value;
+                var userPass = document.getElementById("password_field").value;
 
-            //Create a new user using email and password credentials
-            var promise = firebase.auth().createUserWithEmailAndPassword(userEmail, userPass);
-            promise.then(function(authData) {// Runs after user is created
-                authData.user.sendEmailVerification(); // Send the user a verification email
-            })
+                //Create a new user using email and password credentials
+                var promise = firebase.auth().createUserWithEmailAndPassword(userEmail, userPass);
+                promise.then(function(authData) {// Runs after user is created
+                    authData.user.sendEmailVerification(); // Send the user a verification email
+                })
 
-                .catch(function(error) { //Catches errors that occur while sending email
-                    //Handle Errors here
-                    alert("Sorry, " + error.message);
-                });
-            //Runs post sign up procedures
-            postSignUp();
+                    .catch(function(error) { //Catches errors that occur while sending email
+                        //Handle Errors here
+                        alert("Sorry, " + error.message);
+                    });
+                //Runs post sign up procedures
+                postSignUp();
+            }
+            else
+            {
+                $("#password_error").show();
+            }
+
         }
 
         //Runs after new user has been created
         function postSignUp()
         {
-            //Creates temporary directory variable using the first part of the users email
-            var temp1 = document.getElementById("email_field").value.split("@");
+            var displayName =  document.getElementById("name_field").value;
+            localStorage.setItem("userDisplayNameLocal", displayName);
+            var email =  document.getElementById("email_field").value;
+            localStorage.setItem("userEmailLocal", email);
+            var grade =  document.getElementById("grade_field").value;
+            localStorage.setItem("userGradeLocal", grade);
+            var role = document.getElementById("role_field").value;
+            localStorage.setItem("userRoleLocal", role);
 
-            //Writes basic user info to the temporary directory
-            database.ref("auth/" + temp1[0] + "/").set({
-                displayName: document.getElementById("name_field").value,
-                email: document.getElementById("email_field").value,
-                grade: document.getElementById("grade_field").value,
-                role : document.getElementById("role_field").value
-            });
         }
 
         //Runs after the sign up switch link is clicked
@@ -151,6 +136,7 @@
             $("#displayNameToggle").show();
             $("#gradeToggle").show();
             $("#roleToggle").show();
+            $("#confirmPasswordToggle").show();
         }
 
         function loginSetup()
@@ -163,12 +149,14 @@
             $("#displayNameToggle").hide();
             $("#gradeToggle").hide();
             $("#roleToggle").hide();
+            $("#confirmPasswordToggle").hide();
         }
         $(document).ready(() => {
             //Hides the 3 text inputs when website is first rendered
             $("#displayNameToggle").hide();
             $("#gradeToggle").hide();
             $("#roleToggle").hide();
+            $("#confirmPasswordToggle").hide();
         });
 
     </script>
@@ -184,17 +172,37 @@
 
     <p class = "input_field">Email: &nbsp;<input type = "text" name = "email" id = "email_field"/><br></p>
 
-
+    <p style = "color: red; margin-top: -20px; display: none;" id = "password_error">Your passwords do not match</p>
     <p class = "input_field">Password: &nbsp;<input type = "password" name = "password" id = "password_field"/><br></p>
+
+    <p class = "input_field" id = "confirmPasswordToggle">Confirm Password: &nbsp;<input type = "password" name = "confirm_password" id = "confirm_password_field"/><br></p>
 
 
     <p class = "input_field" id = "displayNameToggle">Display Name: &nbsp;<input type = "text" name = "displayName" id = "name_field"/><br></p>
 
 
-    <p class = "input_field" id = "gradeToggle">Grade: &nbsp;<input type = "number" name = "grade" id = "grade_field"/><br></p>
+    <p class = "input_field" id = "gradeToggle">Grade: &nbsp;
+        <select id = "grade_field">
+        <option value = "1">1</option>
+        <option value = "2">2</option>
+        <option value = "3">3</option>
+        <option value = "4">4</option>
+        <option value = "5">5</option>
+        <option value = "6">6</option>
+        <option value = "7">7</option>
+        <option value = "8">8</option>
+        <option value = "9">9</option>
+        <option value = "10">10</option>
+        <option value = "11">11</option>
+        <option value = "12">12</option>
+        </select><br></p>
 
 
-    <p class = "input_field" id = "roleToggle">Role: &nbsp;<input type = "text" name = "role" id = "role_field"/></p>
+    <p class = "input_field" id = "roleToggle">Role: &nbsp;
+        <select id = "role_field">
+        <option value = "Student">Student</option>
+        <option value = "Tutor">Tutor</option>
+    </select></p>
 
     <p id = "actionLink"><a onclick = "signUpSetup();" id = "toggleLink">Sign Up</a></p>
     <p id = "actionButton"><button onclick = "login()" id = "loginButton">Log In</button></p>

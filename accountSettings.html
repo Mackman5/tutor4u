@@ -11,19 +11,98 @@
 
     <!-- Add Firebase products that you want to use -->
     <script src="https://www.gstatic.com/firebasejs/7.5.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.5.0/firebase-database.js"></script>
+
+    <!--adds jquerry to hide stuff-->
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"
+            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+            crossorigin="anonymous"></script>
 
     <!--Adds script to initialize firebase-->
     <script src="app.js"></script>
 
     <script>
 
+        var listInfo = []; // Global list used to store basic user info locally
+        var fUser;
+        firebase.auth().onAuthStateChanged(function(user) {
+            if (user) {
+                fUser = firebase.auth().currentUser;
+                //Runs when user is logged in
+                var info = database.ref("auth/users/" + user.uid); //Prepares a directory to read user info from database user user id
+                info.on('value', obtainBasicUserData, errData); //Reads user info
 
-        document.getElementById("emailText").innerHTML = "Email: " + listInfo[0] + "! You are a gr." + listInfo[2] + " " + listInfo[3] + " and your email is " + listInfo[1];
+                function obtainBasicUserData(pData)
+                {
+                    //Runs when starting to read user info
+                    //Parsing object from database data
+                    var userData = pData.val();
+                    //Getting the keys needed to get the data from teh object just generated
+                    var userDataKeys = Object.keys(userData);
 
+                    //For loop to iterate through all the keys
+                    for (var i = 0; i < userDataKeys.length; i++)
+                    {
+                        //Sets variable userK to the current key
+                        var userK = userDataKeys[i];
+                        //Pushes data corresponding the the userK key to the global listInfo list
+                        listInfo.push(userData[userK]);
+                    }
+
+                    //Runs change user data function
+                    updateAccountInfo();
+                }
+
+
+            } else {
+                // Runs when no user is signed in
+                window.location.replace("index.html");
+            }
+        });
+
+        //decides to hide or show the goToVerifyBtn depending on the user''s current verified status
+        function hideButtons(){
+            if(firebase.auth().currentUser.emailVerified){
+                $("#goToVerifyBtn").hide();
+            }
+        }
+
+        function errData(err) //Error function that runs if there's an error reading the firebase database
+        {
+            console.log("Error!");
+            console.log(err);
+        }
+
+        function changeEmail(){
+            firebase.auth().signInWithEmailAndPassword(document.getElementById("email_field").value, document.getElementById("pass_field").value).catch(function(error) {alert(error.message)})
+            firebase.auth().currentUser.updateEmail(document.getElementById("new_email_field").value);
+        }
+
+
+        function updateAccountInfo(){
+            //display user data to the user
+            document.getElementById("emailText").innerHTML = "Email: " + listInfo[1] + "<br />";
+            document.getElementById("emailText").innerHTML += "Username: " + listInfo[0] + "<br />";
+            document.getElementById("emailText").innerHTML += "Grade: " + listInfo[2] + "<br />";
+            document.getElementById("emailText").innerHTML += "Role: " + listInfo[3] + "<br />";
+            document.getElementById("emailText").innerHTML += "Is email verified: " + firebase.auth().currentUser.emailVerified;
+            hideButtons();
+        }
     </script>
 
 </head>
 <body>
 <p id = emailText></p>
+<button id = goToVerifyBtn onclick = window.location.replace("verify.html");>Verify My Account</button>
+<button id = changeEmailBtn onclick = "changeEmail();">Change Emails</button>
+<div id = changeEmailForm>
+    <p class = "input_field">Sign in Email: &nbsp;<input type = "text" name = "email" id = "email_field"/><br></p>
+    <p class = "input_field">Password: &nbsp;<input type = "text" name = "password" id = "pass_field"/><br></p>
+
+
+    <p class = "input_field">New Email: &nbsp;<input type = "text" name = "email" id = "new_email_field"/><br></p>
+
+</div>
+
 </body>
 </html>

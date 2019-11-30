@@ -172,16 +172,10 @@ h1
   text-decoration: underline;
 }
 
-.input_field
-{
+.input_field {
   margin-left: 20px;
   margin-bottom: 40px;
   text-align: left;
-}
-
-#input-home
-{
-
 }
 
 #homeButtonDiv
@@ -189,4 +183,16 @@ h1
   margin: 20px auto 0;
   width: 150px;
   text-align: center;
+}
+
+#first-div
+{
+  background-color: #F47;
+  height: 300px;
+  margin-top: 100px;
+  text-align: center;
+  vertical-align: center;
+  color: white;
+  font-size: 30px;
+  display: none;
 }

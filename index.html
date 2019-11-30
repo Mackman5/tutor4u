@@ -22,6 +22,7 @@
       <script src="app.js"></script>
 
       <script>
+        var channel = "message";
         var isLoggedIn;
         var listInfo = [];
         firebase.auth().onAuthStateChanged(function(user) {
@@ -89,7 +90,7 @@
           //...
 
           var temp = "Start of messages! <br>";
-          function updateMessage(channel)
+          function updateMessage()
           {
               temp = document.getElementById("message").innerHTML + "<br>";
               // Write the data to firebase for messaging
@@ -107,11 +108,14 @@
                   });
               document.getElementById("messageSent").value = "";
               //
+
           }
-          var messageRef = firebase.database().ref("message/");
-          messageRef.on('value', getData, errData);
+
+          database.ref(channel + "/").on('value', getData, errData);
+
           function getData(data)
           {
+              alert("run get dad");
               var temp = document.getElementById("message").innerHTML + "<br>";
               var message = data.val();
               var key = Object.keys(message);
@@ -119,7 +123,7 @@
               for (var i = 0; i < key.length; i++)
               {
                   realValues[i] = message[key[i]];
-                  realValues[i] = realValues[i].replace(/</g, "< ")
+                  realValues[i] = realValues[i].replace(/</g, "< ");
               }
 
               document.getElementById("message").innerHTML = temp + " " + realValues[1] + ": " + realValues[0];
@@ -129,6 +133,12 @@
           {
               console.log("Error!");
               console.log(err);
+          }
+
+          function updateChannel()
+          {
+              channel = document.getElementById("messageChannel").value.toString();
+              alert(channel);
           }
 
       </script>
@@ -152,13 +162,14 @@
         </ul>
       </div>
       <p id = "message"> Messages Go Here </p>
-      <p id = "message2"> Messages Go Here </p>
       <br>
       <br>
       <p style = "display:inline-block;">Name:&nbsp</p><p id = "toggleMessageUser" style = "display:inline-block;"><input type = "text" id = "messageUser"></p>
       <p style = "display: inline-block;">&nbsp | Message:</p>
       <input type = "text" id = "messageSent" />
-      <button onclick = "updateMessage('message');">Submit Message</button>
+      <button onclick = "updateMessage();">Submit Message</button>
+      <p>Channel: </p> <input type = "text" id = "messageChannel" />
+      <button onclick = "updateChannel();">Submit Message</button>
       <br>
       <p id = "testerWelcome"></p>
       <div id = "loading">

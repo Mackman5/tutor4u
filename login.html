@@ -105,23 +105,27 @@
             var userEmail = document.getElementById("email_field").value;
             var userPass = document.getElementById("password_field").value;
 
-            // sign in
+            //Create a new user using email and password credentials
             var promise = firebase.auth().createUserWithEmailAndPassword(userEmail, userPass);
-            promise.then(function(authData) {// when email is successfully sent
-                authData.user.sendEmailVerification();
-                //alert("Verification email sent!");
+            promise.then(function(authData) {// Runs after user is created
+                authData.user.sendEmailVerification(); // Send the user a verification email
             })
 
-                .catch(function(error) {
-                    // Handle Errors here.
+                .catch(function(error) { //Catches errors that occur while sending email
+                    //Handle Errors here
                     alert("Sorry, " + error.message);
                 });
+            //Runs post sign up procedures
             postSignUp();
         }
 
+        //Runs after new user has been created
         function postSignUp()
         {
+            //Creates temporary directory variable using the first part of the users email
             var temp1 = document.getElementById("email_field").value.split("@");
+
+            //Writes basic user info to the temporary directory
             database.ref("auth/" + temp1[0] + "/").set({
                 displayName: document.getElementById("name_field").value,
                 email: document.getElementById("email_field").value,
@@ -130,9 +134,13 @@
             });
         }
 
+        //Runs after the sign up switch link is clicked
         function signUpSetup() {
+            //Swaps the link and button names to match the new form
             document.getElementById("actionLink").innerHTML = "<a onclick = \"loginSetup();\" id = \"toggleLink\">Login</a>";
             document.getElementById("actionButton").innerHTML = "<button onclick = \"signUp()\" id = \"loginButton\">Sign Up</button>";
+
+            //Makes additional 3 text inputs visible to the user necessary to sign up as a new user
             $("#displayNameToggle").show();
             $("#gradeToggle").show();
             $("#roleToggle").show();
@@ -140,13 +148,17 @@
 
         function loginSetup()
         {
+            //Swaps the link and button names to match the new form
             document.getElementById("actionLink").innerHTML = "<a onclick = \"signUpSetup();\" id = \"toggleLink\">Sign Up</a>";
             document.getElementById("actionButton").innerHTML = "<button onclick = \"login()\" id = \"loginButton\">Login</button>";
+
+            //Hides the 3 text inputs that the user doesn't need when logging in
             $("#displayNameToggle").hide();
             $("#gradeToggle").hide();
             $("#roleToggle").hide();
         }
         $(document).ready(() => {
+            //Hides the 3 text inputs when website is first rendered
             $("#displayNameToggle").hide();
             $("#gradeToggle").hide();
             $("#roleToggle").hide();

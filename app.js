@@ -30,6 +30,7 @@ function fireWrite(thingToChange, changeTo) {
     });
 }
 
+
 /*/Notification Request
 messaging.requestPermission()
 .then(function() {

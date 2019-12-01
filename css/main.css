@@ -43,7 +43,7 @@ nav ul li
   right: 50px;
 }
 
-#get-started, #logout, #loginButton, #checkVerifyButton, #resendVerifyButton, #input-home
+#get-started, #logout, #loginButton, #checkVerifyButton, #resendVerifyButton, #input-home, #confirmEmailChangeBtn, #confirmPassChangeBtn, #changeEmailBtn #changePassBtn, #goToVerifyBtn
 {
   background-color: #1e88e5;
   color: #FFFFFF;
@@ -224,4 +224,30 @@ h1
 {
   height: 1200px;
   background-color: #B5D6FB;
+}
+
+#accountSettingsDetails
+{
+  margin: 75px auto 0;
+  height: 700px;
+  width: 800px;
+  background-image: url("../img/teaching.jpg");
+  opacity: 1;
+  text-align: center;
+  padding: 30px;
+  border-radius: 10px;
+  border: solid 0.1em black;
+}
+
+#changeEmailForm, #changePassForm
+{
+  margin: 75px auto 0;
+  height: 300px;
+  width: 600px;
+  background-color: #CCCCCC;
+  opacity: .75;
+  text-align: center;
+  padding: 30px;
+  border-radius: 10px;
+  border: solid 0.1em black;
 }

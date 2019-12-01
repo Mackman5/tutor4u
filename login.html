@@ -47,11 +47,11 @@
                     console.log(err);
                 }
                 if (user.emailVerified){
-                    window.location.replace("index.html"); //Waits for 2 seconds to ensure database writing is successful then redirects user to home page
+                    window.location.replace("index.html");
                 }
                 else
                 {
-                    window.location.replace("verify.html"); //Waits for 2 seconds to ensure database writing is successful then redirects user to email verification page
+                    window.location.replace("verify.html");
                 }
 
 
@@ -132,6 +132,8 @@
             document.getElementById("actionLink").innerHTML = "<a onclick = \"loginSetup();\" id = \"toggleLink\">Login</a>";
             document.getElementById("actionButton").innerHTML = "<button onclick = \"signUp()\" id = \"loginButton\">Sign Up</button>";
 
+            //stop showing the reset password button
+            $("resetPassBtn").hide();
             //Makes additional 3 text inputs visible to the user necessary to sign up as a new user
             $("#displayNameToggle").show();
             $("#gradeToggle").show();
@@ -157,8 +159,12 @@
             $("#gradeToggle").hide();
             $("#roleToggle").hide();
             $("#confirmPasswordToggle").hide();
+
         });
 
+        function resetPass(){
+
+        }
     </script>
 </head>
 <body>
@@ -174,6 +180,7 @@
 
     <p style = "color: red; margin-top: -20px; display: none;" id = "password_error">Your passwords do not match</p>
     <p class = "input_field">Password: &nbsp;<input type = "password" name = "password" id = "password_field"/><br></p>
+    <p id = resetPassBtn onclick = "resetPass();">Forgot My Password</p>
 
     <p class = "input_field" id = "confirmPasswordToggle">Confirm Password: &nbsp;<input type = "password" name = "confirm_password" id = "confirm_password_field"/><br></p>
 

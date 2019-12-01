@@ -151,21 +151,22 @@
                     slideElem.each(function() {
                         var $this = $(this),
                             elemOffsetTop = $this.offset().top;
-                        if (currScrollPos + 220 < elemOffsetTop) {
-                            $("#second-div").css("margin-right", 2250 /*Number on left controls starting value number on right controls how fast movement goes*/ - (currScrollPos - 50) * 3.754);
-                        } else if (Math.abs((currScrollPos + 200) - elemOffsetTop) > 0 && (Math.abs((currScrollPos + 200) - elemOffsetTop) < 100))
-                        {
-                            $("#second-div".css)("margin-right", 0)
+                        if (currScrollPos < elemOffsetTop) {
+                            if ((currScrollPos - 125)/5 > 100)
+                            {
+                                $("#second-div").css("width", "100%");
+                            }
+                            else
+                            {
+                                $("#second-div").css("width", /*Number on left controls starting value number on right controls how fast movement goes*/  (currScrollPos - 120)/5  + "%");
+                            }
                         }
                         else{
-                            $("#second-div").css("margin-right", 197 + (currScrollPos - elemOffsetTop) * 2);
+                            $("#second-div").css("width", 100 - (currScrollPos - elemOffsetTop)/5  + "%");
                         }
-
 
                 });
               });
-
-
           });
           //################################################################
 

@@ -30,6 +30,10 @@
             if (user.emailVerified) {
                 window.location.replace("index.html");
             }
+            else
+            {
+                document.getElementById("verifyText").innerHTML = "Your email (" + user.email + ") has not been verified! Please check your email for a link to verify your account.";
+            }
         });
 
         //checks if the user is verified with firebase's check tag, if they are verified, they are kicked from the page to index

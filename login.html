@@ -47,11 +47,11 @@
                     console.log(err);
                 }
                 if (user.emailVerified){
-                    window.location.replace("index.html");
+                    window.location.replace("index.html"); //Waits for 2 seconds to ensure database writing is successful then redirects user to home page
                 }
                 else
                 {
-                    window.location.replace("verify.html");
+                    window.location.replace("verify.html"); //Waits for 2 seconds to ensure database writing is successful then redirects user to email verification page
                 }
 
 
@@ -132,16 +132,15 @@
             document.getElementById("actionLink").innerHTML = "<a onclick = \"loginSetup();\" id = \"toggleLink\">Login</a>";
             document.getElementById("actionButton").innerHTML = "<button onclick = \"signUp()\" id = \"loginButton\">Sign Up</button>";
 
-            //stop showing the reset password button
-            $("resetPassBtn").hide();
             //Makes additional 3 text inputs visible to the user necessary to sign up as a new user
             $("#displayNameToggle").show();
             $("#gradeToggle").show();
             $("#roleToggle").show();
             $("#confirmPasswordToggle").show();
             $("#forgotPassBtn").hide();
-
         }
+
+
 
         function loginSetup()
         {
@@ -155,17 +154,15 @@
             $("#roleToggle").hide();
             $("#confirmPasswordToggle").hide();
             $("#forgotPassBtn").show();
-
         }
+        $(document).ready(() => {
+            //Hides the 3 text inputs when website is first rendered
+            $("#displayNameToggle").hide();
+            $("#gradeToggle").hide();
+            $("#roleToggle").hide();
+            $("#confirmPasswordToggle").hide();
+        });
 
-
-
-            function toggleForm(id){
-                if($(id).is(':visible')){
-                    $(id).hide();
-                }
-                else{$(id).show();}
-            }
     </script>
 </head>
 <body>
@@ -177,21 +174,20 @@
 
 <div id = "input-form">
 
-    <p class = "input_field">Email: &nbsp;<input type = "text" name = "email" id = "email_field"/><br></p>
+    <p class = "input_field"><input type = "text" name = "email" id = "email_field" placeholder = "Email"/><br></p>
 
     <p style = "color: red; margin-top: -20px; display: none;" id = "password_error">Your passwords do not match</p>
-    <p class = "input_field">Password: &nbsp;<input type = "password" name = "password" id = "password_field"/><br></p>
-
-    <a id = "forgotPassBtn" href = "forgotPassword.html" target="_blank">Forgot My Password</a>
-
-
-    <p class = "input_field" id = "confirmPasswordToggle" style="display: none">Confirm Password: &nbsp;<input type = "password" name = "confirm_password" id = "confirm_password_field"/><br></p>
+    <p class = "input_field"><input type = "password" name = "password" id = "password_field" placeholder = "Password"/><br></p>
+    <a id = "forgotPassBtn" onclick = "toggleForm('#forgotPassForm');">Forgot My Password</a>
 
 
-    <p class = "input_field" id = "displayNameToggle" style="display: none">Display Name: &nbsp;<input type = "text" name = "displayName" id = "name_field"/><br></p>
+    <p class = "input_field" id = "confirmPasswordToggle"><input type = "password" name = "confirm_password" id = "confirm_password_field" placeholder = "Confirm Password"/><br></p>
 
 
-    <p class = "input_field" id = "gradeToggle" style="display: none">Grade: &nbsp;
+    <p class = "input_field" id = "displayNameToggle"><input type = "text" name = "displayName" id = "name_field" placeholder = "Display Name"/><br></p>
+
+
+    <p class = "input_field" id = "gradeToggle">Grade: &nbsp;
         <select id = "grade_field">
         <option value = "1">1</option>
         <option value = "2">2</option>
@@ -208,7 +204,7 @@
         </select><br></p>
 
 
-    <p class = "input_field" id = "roleToggle" style="display: none">Role: &nbsp;
+    <p class = "input_field" id = "roleToggle">Role: &nbsp;
         <select id = "role_field">
         <option value = "Student">Student</option>
         <option value = "Tutor">Tutor</option>

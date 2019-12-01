@@ -51,7 +51,7 @@ nav ul li
   font-family: 'H', 'Trebuchet MS', Helvetica, serif;
   border-radius: 4px;
   border: none;
-  padding: 10px 10px;
+  padding: 10px;
   right: 10px;
 }
 
@@ -92,14 +92,13 @@ a
 
 #input-form
 {
-  text-align: center;
   border-radius: 20px;
   padding: 30px;
   width: 350px;
   height: 600px;
-  margin: 8% auto;
+  margin: 3% auto;
   background-color: #B5D6FB;
-
+  text-align: center;
 }
 
 #message
@@ -113,11 +112,20 @@ a
 #toggleLink:hover
 {
   cursor: pointer;
+  text-decoration: underline;
 }
 
 #loginButton:hover
 {
   cursor: pointer;
+}
+
+#loginButton:active
+{
+  padding: 2px;
+  width: 65px;
+  height: 40px;
+  font-size: 16px;
 }
 
 h1
@@ -224,4 +232,25 @@ h1
 {
   height: 1200px;
   background-color: #B5D6FB;
+}
+
+#email_field, #password_field, #name_field, #grade_field, #role_field, #confirm_password_field
+{
+  padding: 5px;
+  outline: solid thin #CCC;
+  width: 200px;
+}
+
+#email_field:focus, #password_field:focus, #name_field:focus, #grade_field:focus, #role_field:focus, #confirm_password_field:focus
+{
+  outline: solid 0.01em #37A000;
+}
+
+#forgotPassBtn
+{
+  color: #555;
+  text-decoration: underline;
+  font-size: 14px;
+  cursor: pointer;
+  text-align: start;
 }

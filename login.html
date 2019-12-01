@@ -137,7 +137,10 @@
             $("#gradeToggle").show();
             $("#roleToggle").show();
             $("#confirmPasswordToggle").show();
+            $("#forgotPassBtn").hide();
         }
+
+
 
         function loginSetup()
         {
@@ -150,6 +153,7 @@
             $("#gradeToggle").hide();
             $("#roleToggle").hide();
             $("#confirmPasswordToggle").hide();
+            $("#forgotPassBtn").show();
         }
         $(document).ready(() => {
             //Hides the 3 text inputs when website is first rendered
@@ -170,15 +174,17 @@
 
 <div id = "input-form">
 
-    <p class = "input_field">Email: &nbsp;<input type = "text" name = "email" id = "email_field"/><br></p>
+    <p class = "input_field"><input type = "text" name = "email" id = "email_field" placeholder = "Email"/><br></p>
 
     <p style = "color: red; margin-top: -20px; display: none;" id = "password_error">Your passwords do not match</p>
-    <p class = "input_field">Password: &nbsp;<input type = "password" name = "password" id = "password_field"/><br></p>
+    <p class = "input_field"><input type = "password" name = "password" id = "password_field" placeholder = "Password"/><br></p>
+    <a id = "forgotPassBtn" onclick = "toggleForm('#forgotPassForm');">Forgot My Password</a>
 
-    <p class = "input_field" id = "confirmPasswordToggle">Confirm Password: &nbsp;<input type = "password" name = "confirm_password" id = "confirm_password_field"/><br></p>
+
+    <p class = "input_field" id = "confirmPasswordToggle"><input type = "password" name = "confirm_password" id = "confirm_password_field" placeholder = "Confirm Password"/><br></p>
 
 
-    <p class = "input_field" id = "displayNameToggle">Display Name: &nbsp;<input type = "text" name = "displayName" id = "name_field"/><br></p>
+    <p class = "input_field" id = "displayNameToggle"><input type = "text" name = "displayName" id = "name_field" placeholder = "Display Name"/><br></p>
 
 
     <p class = "input_field" id = "gradeToggle">Grade: &nbsp;

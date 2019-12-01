@@ -37,8 +37,6 @@
               //Runs when user is logged in
               isLoggedIn = true; // Sets global isLoggedIn variable to true
               document.getElementById("mainButton").innerHTML = "<button id = \"get-started\" onclick = \"dropdown();\">My account</button>"; // Changes main button to my account instead of get started button
-                document.getElementById("toggleMessageUser").innerHTML = "<p style =\"color: #CCC\">User is currently signed in</p>"; // Removes option to change your name in the chat
-
                 var info = database.ref("auth/users/" + user.uid); //Prepares a directory to read user info from database user user id
                 info.on('value', obtainBasicUserData, errData); //Reads user info
 
@@ -60,15 +58,9 @@
                     }
 
                     //Runs change user greeting function
-                    changeUserGreeting();
-
                 }
 
-                function changeUserGreeting() //Updates welcome message after user data is globally stored in listInfo list
-                {
-                    //Updates the greeting using the global listInfo list
-                    document.getElementById("testerWelcome").innerHTML = "Welcome " + listInfo[0] + "! You are a gr." + listInfo[2] + " " + listInfo[3] + " and your email is " + listInfo[1];
-                }
+
 
 
               } else {
@@ -111,6 +103,11 @@
               $("#accountDropdown").slideToggle(350);
           }
 
+          function sideNavSlide()
+          {
+              $("#side-nav").animate({left: "0px"})
+          }
+
           //Waits until the html document is ready to run
           $(document).ready(function(){
               $("#loading").hide();
@@ -122,12 +119,33 @@
               $(document).click(function(){
                   $("#accountDropdown").slideUp(350);
               });
+
+              $("#menuButtonDiv").click(function(){
+                  $("#accountDropdown").slideUp(350);
+              });
               //Stops the accountDropdown from disappearing if the user clicks on the dropdown itself
               $("#accountDropdown").click(function(e){
                   e.stopPropagation();
               });
               //Stops the accountDropdown from disappearing if the user clicks anywhere on the main nav
               $("#mainButton").click(function(e){
+                  e.stopPropagation();
+              });
+
+              //When the user clicks, it always hides the account dropdown unless stopped by the next two jQuery functions
+              $(document).click(function(){
+                  $("#side-nav").animate({left: "-200px"});
+              });
+
+              $("#mainButton").click(function(){
+                  $("#side-nav").animate({left: "-200px"});
+              });
+              //Stops the accountDropdown from disappearing if the user clicks on the dropdown itself
+              $("#side-nav").click(function(e){
+                  e.stopPropagation();
+              });
+              //Stops the accountDropdown from disappearing if the user clicks anywhere on the main nav
+              $("#menuButtonDiv").click(function(e){
                   e.stopPropagation();
               });
 
@@ -145,6 +163,7 @@
                   });
 
               });
+
                 var slideElem = $("#second-div");
                 documentEL.on("scroll", function(){
                     var currScrollPos = documentEL.scrollTop();
@@ -180,14 +199,19 @@
       <div id = "third-div"><h2>SUMMA LUMMA</h2></div>
       <nav>
           <ul>
-              <li class = "left-nav"><a href = "index.html"><h1>Tutor for you</h1></a></li>
+              <li id = "menuButtonDiv"><a id = "menuButton" onclick = "sideNavSlide()"><h1>&#9776; Menu</h1></a></li>
+              <li id = "mainButton"></li>
+          </ul>
+      </nav>
+      <div id = "side-nav">
+          <ul>
+              <li class = "left-nav"><a href = "index.html"><h2>Home</h2></a></li>
               <li class = "left-nav"><a href = "tutoring.html"><h2>Tutoring</h2></a></li>
               <li class = "left-nav"><a href = "options.html"><h2>Options</h2></a></li>
               <li class = "left-nav"><a href = "about.html"><h2>About</h2></a></li>
               <li class = "left-nav"><a href = "messaging.html"><h2>Messaging</h2></a></li>
-              <li id = "mainButton"></li>
           </ul>
-      </nav>
+      </div>
       <div id = "accountDropdown">
           <ul>
               <li><a href = "accountSettings.html" style = "cursor: pointer;">Account Settings</a></li>

@@ -108,38 +108,64 @@
           function dropdown()
           {
               // Makes the accountDropdown visible
-              $("#accountDropdown").show();
+              $("#accountDropdown").slideToggle(350);
           }
 
           //Waits until the html document is ready to run
           $(document).ready(function(){
               $("#loading").hide();
 
-              $('#first-div').fadeIn(750);
+              setTimeout(function(){$('#first-div').fadeIn(750)}, 200);
+
 
               //When the user clicks, it always hides the account dropdown unless stopped by the next two jQuery functions
               $(document).click(function(){
-                  $("#accountDropdown").hide();
+                  $("#accountDropdown").slideUp(350);
               });
               //Stops the accountDropdown from disappearing if the user clicks on the dropdown itself
               $("#accountDropdown").click(function(e){
                   e.stopPropagation();
               });
               //Stops the accountDropdown from disappearing if the user clicks anywhere on the main nav
-              $("nav").click(function(e){
+              $("#mainButton").click(function(e){
                   e.stopPropagation();
               });
 
               var documentEL = $(document),
                   fadeElem = $("#first-div");
-              documentEL.on("scroll", function(){
-                var currScrollPos = documentEL.scrollTop();
-                fadeElem.each(function() {
-                    var $this = $(this),
-                        elemOffsetTop = $this.offset().top;
-                    if ((currScrollPos + 200) > elemOffsetTop) $this.css("opacity", 1-((currScrollPos + 200) - elemOffsetTop)/300)
+              documentEL.on("scroll", function() {
+                  var currScrollPos = documentEL.scrollTop();
+                  fadeElem.each(function () {
+                      var $this = $(this),
+                          elemOffsetTop = $this.offset().top;
+                      if (currScrollPos - 100 > elemOffsetTop) {
+                          $this.css("opacity", 1 - ((currScrollPos - 100) - elemOffsetTop) / 700);
+
+                      }
+                  });
+
+              });
+                var slideElem = $("#second-div");
+                documentEL.on("scroll", function(){
+                    var currScrollPos = documentEL.scrollTop();
+                    slideElem.each(function() {
+                        var $this = $(this),
+                            elemOffsetTop = $this.offset().top;
+                        if (currScrollPos + 220 < elemOffsetTop) {
+                            $("#second-div").css("margin-right", 2250 /*Number on left controls starting value number on right controls how fast movement goes*/ - (currScrollPos - 50) * 3.754);
+                        } else if (Math.abs((currScrollPos + 200) - elemOffsetTop) > 0 && (Math.abs((currScrollPos + 200) - elemOffsetTop) < 100))
+                        {
+                            $("#second-div".css)("margin-right", 0)
+                        }
+                        else{
+                            $("#second-div").css("margin-right", 197 + (currScrollPos - elemOffsetTop) * 2);
+                        }
+
+
                 });
               });
+
+
           });
           //################################################################
 
@@ -148,8 +174,9 @@
 
   </head>
   <body>
-      <p id = "testerWelcome"></p>
-      <div id = "first-div"><h2>Look at me faaaade</h2></div>
+      <div id = "first-div"><h2>Tutor 4 you</h2></div>
+      <div id = "second-div"><h2>UIYHGBSYUDCGBYUSDBYU</h2></div>
+      <div id = "third-div"><h2>SUMMA LUMMA</h2></div>
       <nav>
           <ul>
               <li class = "left-nav"><a href = "index.html"><h1>Tutor for you</h1></a></li>
@@ -167,6 +194,7 @@
               <li><a onclick = "signUserOut()" style = "cursor: pointer;">Logout</a></li>
           </ul>
       </div>
+
       <div id = "loading">
       </div>
   </body>

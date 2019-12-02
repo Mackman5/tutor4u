@@ -28,20 +28,7 @@
     <script>
         //Make global variables #########################
         var dupeStop = true;
-        channel = {
-            aInternal: "message",
-            aListener: function(val) {},
-            set a(val) {
-                this.aInternal = val;
-                this.aListener(val);
-            },
-            get a() {
-                return this.aInternal;
-            },
-            registerListener: function(listener) {
-                this.aListener = listener;
-            }
-        }// Channel is what channel to read from
+        channel = "message";// Channel is what channel to read from
         var isLoggedIn; // Global variable to let us know if user is logged in or not
         var stopDoubleMessage; //stops the message from being submitted twice
         var listInfo = []; // Global list used to store basic user info locally
@@ -137,30 +124,26 @@
                 var messageSender = String(document.getElementById("messageUser").value);
             }
             //Writes to database using the custom channel directory provided by the user stored in global variable channel that is updated in updateChannel function
-            database.ref("message").set({
+            database.ref("message/").set({
                 userOrSomething: messageSender,
                 payloadOrSomething: document.getElementById("messageSent").value,
-                channelOrSomething: channel.a
+                channelOrSomething: channel
             });
             //Clears the message box for better UI and ease of use
             document.getElementById("messageSent").value = "";
             //
         }
 
-        channel.registerListener(function(val) {
-            alert(channel.a);
-            firebase.database().ref(channel.a + '/').on('value', getMessageData, errData); //Runs on change of firebase
-        });
+        var messageRef = firebase.database().ref('message/');
 
-        firebase.database().ref(channel.a + '/').on('value', getMessageData, errData); //Runs on change of firebase
+        messageRef.on('value', getMessageData, errData); //Runs on change of firebase
 
         function getMessageData(data) //Reads from firebase and updates the message chat
         {
-            if (dupeStop){
-                dupeStop = false;
-                alert(channel.a);
+                alert(channel);
                 var temp = document.getElementById("message").innerHTML + "<br>"; // Remembers the old value of the message box to not overwrite things
                 var message = data.val(); // Extracts data from firebase as an object
+                console.log(message);
                 var key = Object.keys(message); // Gets the keys to extract info from firebase
                 var realValues = []; // List used to store all the extracted data from the reading of the firebase database object
                 //For loop to iterate through all the keys that were extracted
@@ -169,7 +152,7 @@
                     realValues[i] = realValues[i].replace(/</g, "< "); //Prevents code injection by adding a space after the < symbol
                 }
                 var lel = realValues[0].toString();
-                var lelel = channel.a.toString();
+                var lelel = channel.toString();
                 if (lel == lelel)
                 {
                     alert("ITS TO MEEEE");
@@ -181,8 +164,6 @@
                 {
                     alert("Message is not for mee HMOPH");
                 }
-                dupeStop = true;
-            }
         }
 
         function errData(err) //Error function that runs if there's an error reading the firebase database
@@ -195,12 +176,11 @@
 
         function updateChannel() // Runs when the bottom submit channel but is clicked
         {
-            channel.a = document.getElementById("messageChannel").value.toString(); //Updates global chanel variable to the value submitted by the user
-            database.ref("message").set({
-                payloadOrSomething: "Welcome to channel " + channel.a,
-                userOrSomething: "Hackerman",
-                channelOrSomething: channel.a
-            });
+            channel = document.getElementById("messageChannel").value.toString(); //Updates global chanel variable to the value submitted by the user
+            var temp = document.getElementById("message").innerHTML + "<br>"; // Remembers the old value of the message box to not overwrite things
+            document.getElementById("message").innerHTML = temp + "<h1>Hackerman: Welcome to channel " + channel + "</h1>"; // Updates the message box
+            document.getElementById('message').scrollTop = document.getElementById('message').scrollHeight; // Scrolls to the bottom of the text box on message
+            localStorage.setItem("chatLog", document.getElementById("message").innerHTML);
         }
 
         function sideNavSlide()

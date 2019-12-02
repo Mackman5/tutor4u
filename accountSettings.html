@@ -91,7 +91,7 @@
         }
 
         function changePass(){
-            if(document.getElementById("new_pass_field").value == document.getElementById("confirm_new_pass_field").value) {
+            if(document.getElementById("new_pass_field").value === document.getElementById("confirm_new_pass_field").value) {
                 $('#password_error').hide();
                 firebase.auth().signInWithEmailAndPassword(document.getElementById("pEmail_field").value, document.getElementById("pPass_field").value).catch(function (error) {
                     alert(error.message)

@@ -27,7 +27,7 @@
 
     <script>
         //Make global variables #########################
-        var channel ; // Channel is what channel to read from
+        var channel = "message"; // Channel is what channel to read from
         var isLoggedIn; // Global variable to let us know if user is logged in or not
         var stopDoubleMessage; //stops the message from being submitted twice
         var listInfo = []; // Global list used to store basic user info locally
@@ -54,7 +54,7 @@
                     //Runs when starting to read user info
                     //Parsing object from database data
                     var userData = pData.val();
-                    //Getting the keys needed to get the data from teh object just generated
+                    //Getting the keys needed to get the data from the object just generated
                     var userDataKeys = Object.keys(userData);
 
                     //For loop to iterate through all the keys
@@ -93,6 +93,8 @@
             $("#accountDropdown").hide();
         }
 
+
+
         function updateMessage()
         {
             stopDoubleMessage = true; //makes the getMessageData "meat" run
@@ -117,13 +119,13 @@
             //Clears the message box for better UI and ease of use
             document.getElementById("messageSent").value = "";
             //
-            firebase.database().ref(channel + '/').on('value', getMessageData, errData); //Runs on change of firebase
+             //Runs on change of firebase
         }
 
 
         function getMessageData(data) //Reads from firebase and updates the message chat
         {
-            if (stopDoubleMessage) {
+            alert("Change detected");
                 var temp = document.getElementById("message").innerHTML + "<br>"; // Remembers the old value of the message box to not overwrite things
                 var message = data.val(); // Extracts data from firebase as an object
                 var key = Object.keys(message); // Gets the keys to extract info from firebase
@@ -137,7 +139,6 @@
                 document.getElementById('message').scrollTop = document.getElementById('message').scrollHeight; // Scrolls to the bottom of the text box on message
                 localStorage.setItem("chatLog", document.getElementById("message").innerHTML);
                 stopDoubleMessage = false; //stops double running
-            }
         }
 
         function errData(err) //Error function that runs if there's an error reading the firebase database
@@ -150,6 +151,9 @@
         function updateChannel() // Runs when the bottom submit channel but is clicked
         {
             channel = document.getElementById("messageChannel").value.toString(); //Updates global chanel variable to the value submitted by the user
+            alert(channel);
+            firebase.database().ref(channel + '/').on('value', getMessageData, errData);
+
         }
 
         function sideNavSlide()

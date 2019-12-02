@@ -119,7 +119,7 @@
             //Clears the message box for better UI and ease of use
             document.getElementById("messageSent").value = "";
             //
-             //Runs on change of firebase
+            firebase.database().ref(channel + '/').on('value', getMessageData, errData); //Runs on change of firebase
         }
 
 
@@ -147,8 +147,6 @@
             console.log(err);
         }
         //################################################################
-
-        firebase.database().ref(channel + '/').on('value', getMessageData, errData);
 
 
         function updateChannel() // Runs when the bottom submit channel but is clicked

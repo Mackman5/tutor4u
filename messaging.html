@@ -27,7 +27,7 @@
 
     <script>
         //Make global variables #########################
-        var channel = "message"; // Channel is what channel to read from
+        var channel = "message";// Channel is what channel to read from
         var isLoggedIn; // Global variable to let us know if user is logged in or not
         var stopDoubleMessage; //stops the message from being submitted twice
         var listInfo = []; // Global list used to store basic user info locally
@@ -162,8 +162,12 @@
 
         function updateChannel() // Runs when the bottom submit channel but is clicked
         {
-            channel = document.getElementById("messageChannel").value.toString(); //Updates global chanel variable to the value submitted by the user
+            window.channel = document.getElementById("messageChannel").value.toString(); //Updates global chanel variable to the value submitted by the user
             alert(channel);
+            database.ref(channel + "/").set({
+                payloadOrSomething: "Welcome to channel " + channel,
+                userOrSomething: "Hackerman"
+            });
         }
 
         function sideNavSlide()

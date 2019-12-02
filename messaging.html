@@ -159,19 +159,48 @@
             channel = document.getElementById("messageChannel").value.toString(); //Updates global chanel variable to the value submitted by the user
         }
 
+        function sideNavSlide()
+        {
+            $("#side-nav").animate({left: "0px"})
+        }
+
+        $(document).ready(function(){
+            //When the user clicks, it always hides the account dropdown unless stopped by the next two jQuery functions
+            $(document).click(function(){
+                $("#side-nav").animate({left: "-200px"});
+            });
+
+            $("#mainButton").click(function(){
+                $("#side-nav").animate({left: "-200px"});
+            });
+            //Stops the accountDropdown from disappearing if the user clicks on the dropdown itself
+            $("#side-nav").click(function(e){
+                e.stopPropagation();
+            });
+            //Stops the accountDropdown from disappearing if the user clicks anywhere on the main nav
+            $("#menuButtonDiv").click(function(e) {
+                e.stopPropagation();
+            });
+        });
+
     </script>
 
 </head>
 <body>
 <nav>
     <ul>
-        <li class = "left-nav"><a href = "index.html"><h1>Tutor for you</h1></a></li>
+        <li id = "menuButtonDiv"><a id = "menuButton" onclick = "sideNavSlide()"><h1>&#9776; Menu</h1></a></li>
+    </ul>
+</nav>
+<div id = "side-nav">
+    <ul>
+        <li class = "left-nav"><a href = "index.html"><h2>Home</h2></a></li>
         <li class = "left-nav"><a href = "tutoring.html"><h2>Tutoring</h2></a></li>
         <li class = "left-nav"><a href = "options.html"><h2>Options</h2></a></li>
         <li class = "left-nav"><a href = "about.html"><h2>About</h2></a></li>
         <li class = "left-nav"><a href = "messaging.html"><h2>Messaging</h2></a></li>
     </ul>
-</nav>
+</div>
 <p id = "message"> Messages Go Here </p>
 <br>
 <br>

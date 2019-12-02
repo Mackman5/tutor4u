@@ -4,24 +4,55 @@
     <meta charset="UTF-8">
     <title>Tutor4u - Tutoring</title>
     <link rel="stylesheet" type="text/css" href="css/main.css">
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"
+            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+            crossorigin="anonymous"></script>
+    <script>
+        function sideNavSlide()
+        {
+            $("#side-nav").animate({left: "0px"})
+        }
+
+        $(document).ready(function(){
+            //When the user clicks, it always hides the account dropdown unless stopped by the next two jQuery functions
+            $(document).click(function(){
+                $("#side-nav").animate({left: "-200px"});
+            });
+
+            $("#mainButton").click(function(){
+                $("#side-nav").animate({left: "-200px"});
+            });
+            //Stops the accountDropdown from disappearing if the user clicks on the dropdown itself
+            $("#side-nav").click(function(e){
+                e.stopPropagation();
+            });
+            //Stops the accountDropdown from disappearing if the user clicks anywhere on the main nav
+            $("#menuButtonDiv").click(function(e) {
+                e.stopPropagation();
+            });
+        });
+
+    </script>
 </head>
 
 <body>
 
 <nav>
     <ul>
-        <li class = "left-nav"><a href = "index.html"><h1>Tutor for you</h1></a></li>
+        <li id = "menuButtonDiv"><a id = "menuButton" onclick = "sideNavSlide()"><h1>&#9776; Menu</h1></a></li>
+    </ul>
+</nav>
+<div id = "side-nav">
+    <ul>
+        <li class = "left-nav"><a href = "index.html"><h2>Home</h2></a></li>
         <li class = "left-nav"><a href = "tutoring.html"><h2>Tutoring</h2></a></li>
         <li class = "left-nav"><a href = "options.html"><h2>Options</h2></a></li>
         <li class = "left-nav"><a href = "about.html"><h2>About</h2></a></li>
-        <li id = "mainButton"></li>
+        <li class = "left-nav"><a href = "messaging.html"><h2>Messaging</h2></a></li>
     </ul>
-</nav>
-
-<div id = "tutoring-top">
-    <h1>Tutoring</h1>
 </div>
 
+<h1 style = "margin-top: 140px">Tutoring</h1>
 
 
 <label class="switch">

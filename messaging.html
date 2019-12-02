@@ -136,7 +136,7 @@
 
         function getMessageData(data) //Reads from firebase and updates the message chat
         {
-            alert("Change detected");
+            alert(channel);
                 var temp = document.getElementById("message").innerHTML + "<br>"; // Remembers the old value of the message box to not overwrite things
                 var message = data.val(); // Extracts data from firebase as an object
                 var key = Object.keys(message); // Gets the keys to extract info from firebase
@@ -164,6 +164,10 @@
         {
             window.channel = document.getElementById("messageChannel").value.toString(); //Updates global chanel variable to the value submitted by the user
             alert(channel);
+            database.ref(channel + "/").set({
+                payloadOrSomething: "Welcome to channel " + channel,
+                userOrSomething: "Hackerman"
+            });
         }
 
         function sideNavSlide()

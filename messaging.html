@@ -65,18 +65,7 @@
                         //Pushes data corresponding the the userK key to the global listInfo list
                         listInfo.push(userData[userK]);
                     }
-
-                    //Runs change user greeting function
-                    changeUserGreeting();
-
                 }
-
-                function changeUserGreeting() //Updates welcome message after user data is globally stored in listInfo list
-                {
-                    //Updates the greeting using the global listInfo list
-                    document.getElementById("testerWelcome").innerHTML = "Welcome " + listInfo[0] + "! You are a gr." + listInfo[2] + " " + listInfo[3] + " and your email is " + listInfo[1];
-                }
-
 
             } else {
                 // Runs when no user is signed in

@@ -173,6 +173,12 @@
         }
         //################################################################
 
+        function clearChatLog()
+        {
+            localStorage.removeItem("chatLog");
+            localStorage.setItem("chatLog","");
+            document.getElementById("message").innerHTML = "Chat cleared";
+        }
 
         function updateChannel() // Runs when the bottom submit channel but is clicked
         {
@@ -234,6 +240,7 @@
 <button onclick = "updateMessage();">Submit Message</button>
 <p>Channel: </p> <input type = "text" id = "messageChannel" />
 <button onclick = "updateChannel();">Change Message</button>
+<button onclick = "clearChatLog()">Clear chat log</button>
 <br>
 <div id = "loading">
 </div>

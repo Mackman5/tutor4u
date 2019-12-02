@@ -27,7 +27,20 @@
 
     <script>
         //Make global variables #########################
-        var channel = "message";// Channel is what channel to read from
+        channel = {
+            aInternal: "message",
+            aListener: function(val) {},
+            set a(val) {
+                this.aInternal = val;
+                this.aListener(val);
+            },
+            get a() {
+                return this.aInternal;
+            },
+            registerListener: function(listener) {
+                this.aListener = listener;
+            }
+        }// Channel is what channel to read from
         var isLoggedIn; // Global variable to let us know if user is logged in or not
         var stopDoubleMessage; //stops the message from being submitted twice
         var listInfo = []; // Global list used to store basic user info locally
@@ -112,16 +125,21 @@
                 var messageSender = String(document.getElementById("messageUser").value);
             }
             //Writes to database using the custom channel directory provided by the user stored in global variable channel that is updated in updateChannel function
-            database.ref(channel + '/').set({
+            database.ref(channel.a + '/').set({
                 userOrSomething: messageSender,
                 payloadOrSomething: document.getElementById("messageSent").value
             });
             //Clears the message box for better UI and ease of use
             document.getElementById("messageSent").value = "";
             //
-            firebase.database().ref(channel + '/').on('value', getMessageData, errData); //Runs on change of firebase
         }
 
+        channel.registerListener(function(val) {
+            alert(channel.a);
+            firebase.database().ref(channel.a + '/').on('value', getMessageData, errData); //Runs on change of firebase
+        });
+
+        firebase.database().ref(channel.a + '/').on('value', getMessageData, errData); //Runs on change of firebase
 
         function getMessageData(data) //Reads from firebase and updates the message chat
         {
@@ -151,10 +169,9 @@
 
         function updateChannel() // Runs when the bottom submit channel but is clicked
         {
-            window.channel = document.getElementById("messageChannel").value.toString(); //Updates global chanel variable to the value submitted by the user
-            alert(channel);
-            database.ref(channel + "/").set({
-                payloadOrSomething: "Welcome to channel " + channel,
+            channel.a = document.getElementById("messageChannel").value.toString(); //Updates global chanel variable to the value submitted by the user
+            database.ref(channel.a + "/").set({
+                payloadOrSomething: "Welcome to channel " + channel.a,
                 userOrSomething: "Hackerman"
             });
         }

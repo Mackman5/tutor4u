@@ -148,12 +148,13 @@
         }
         //################################################################
 
+        firebase.database().ref(channel + '/').on('value', getMessageData, errData);
+
+
         function updateChannel() // Runs when the bottom submit channel but is clicked
         {
             channel = document.getElementById("messageChannel").value.toString(); //Updates global chanel variable to the value submitted by the user
             alert(channel);
-            firebase.database().ref(channel + '/').on('value', getMessageData, errData);
-
         }
 
         function sideNavSlide()

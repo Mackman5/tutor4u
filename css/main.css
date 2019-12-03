@@ -307,3 +307,22 @@ h1
   top: 16px;
   left: 46%;
 }
+
+#accountContainer
+{
+  background-color: white;
+  width: 400px;
+  margin: auto;
+}
+
+#accountNav
+{
+  margin-top: 30px;
+  list-style: none;
+  display: inline-block;
+}
+
+#accountNav li
+{
+  padding: 15px 5px;
+}

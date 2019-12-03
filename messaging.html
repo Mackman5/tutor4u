@@ -20,7 +20,7 @@
 
 
     <script src="app.js"></script>
-
+    <meta name="viewport" content="width=device-width, user-scalable=no">
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"
             integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
             crossorigin="anonymous"></script>
@@ -140,30 +140,24 @@
 
         function getMessageData(data) //Reads from firebase and updates the message chat
         {
-                alert(channel);
-                var temp = document.getElementById("message").innerHTML + "<br>"; // Remembers the old value of the message box to not overwrite things
-                var message = data.val(); // Extracts data from firebase as an object
-                console.log(message);
-                var key = Object.keys(message); // Gets the keys to extract info from firebase
-                var realValues = []; // List used to store all the extracted data from the reading of the firebase database object
-                //For loop to iterate through all the keys that were extracted
-                for (var i = 0; i < key.length; i++) {
-                    realValues[i] = message[key[i]]; // Writes the sender to realValues lis the first iteration and the message itself the second iteration
-                    realValues[i] = realValues[i].replace(/</g, "< "); //Prevents code injection by adding a space after the < symbol
-                }
-                var lel = realValues[0].toString();
-                var lelel = channel.toString();
-                if (lel == lelel)
-                {
-                    alert("ITS TO MEEEE");
-                    document.getElementById("message").innerHTML = temp + " " + realValues[2] + ": " + realValues[1]; // Updates the message box
-                    document.getElementById('message').scrollTop = document.getElementById('message').scrollHeight; // Scrolls to the bottom of the text box on message
-                    localStorage.setItem("chatLog", document.getElementById("message").innerHTML);
-                }
-                else
-                {
-                    alert("Message is not for mee HMOPH");
-                }
+            var temp = document.getElementById("message").innerHTML + "<br>"; // Remembers the old value of the message box to not overwrite things
+            var message = data.val(); // Extracts data from firebase as an object
+            console.log(message);
+            var key = Object.keys(message); // Gets the keys to extract info from firebase
+            var realValues = []; // List used to store all the extracted data from the reading of the firebase database object
+            //For loop to iterate through all the keys that were extracted
+            for (var i = 0; i < key.length; i++) {
+                realValues[i] = message[key[i]]; // Writes the sender to realValues lis the first iteration and the message itself the second iteration
+                realValues[i] = realValues[i].replace(/</g, "< "); //Prevents code injection by adding a space after the < symbol
+            }
+            var lel = realValues[0].toString();
+            var lelel = channel.toString();
+            if (lel == lelel)
+            {
+                document.getElementById("message").innerHTML = temp + " " + realValues[2] + ": " + realValues[1]; // Updates the message box
+                document.getElementById('message').scrollTop = document.getElementById('message').scrollHeight; // Scrolls to the bottom of the text box on message
+                localStorage.setItem("chatLog", document.getElementById("message").innerHTML);
+            }
         }
 
         function errData(err) //Error function that runs if there's an error reading the firebase database
@@ -184,7 +178,7 @@
         {
             channel = document.getElementById("messageChannel").value.toString(); //Updates global chanel variable to the value submitted by the user
             var temp = document.getElementById("message").innerHTML + "<br>"; // Remembers the old value of the message box to not overwrite things
-            document.getElementById("message").innerHTML = temp + "<h1>Hackerman: Welcome to channel " + channel + "</h1>"; // Updates the message box
+            document.getElementById("message").innerHTML = temp + "<h3>Welcome to channel " + channel + "</h3>"; // Updates the message box
             document.getElementById('message').scrollTop = document.getElementById('message').scrollHeight; // Scrolls to the bottom of the text box on message
             localStorage.setItem("chatLog", document.getElementById("message").innerHTML);
         }
@@ -234,12 +228,12 @@
 <p id = "message"> Messages Go Here </p>
 <br>
 <br>
-<p style = "display:inline-block;">Name:&nbsp</p><p id = "toggleMessageUser" style = "display:inline-block;"><input type = "text" id = "messageUser"></p>
-<p style = "display: inline-block;">&nbsp | Message:</p>
-<input type = "text" id = "messageSent" />
+<p style = "display:inline-block;">&nbspName:&nbsp</p><p id = "toggleMessageUser" style = "display:inline-block;"><input type = "text" id = "messageUser"></p><br>
+<p style = "display: inline-block;">&nbsp Message:</p>
+<input type = "text" id = "messageSent" /><br>
 <button onclick = "updateMessage();">Submit Message</button>
-<p>Channel: </p> <input type = "text" id = "messageChannel" />
-<button onclick = "updateChannel();">Change Message</button>
+<p>Channel: </p> <input type = "text" id = "messageChannel" /><br><br>
+<button onclick = "updateChannel();">Change Channel</button><br><br>
 <button onclick = "clearChatLog()">Clear chat log</button>
 <br>
 <div id = "loading">

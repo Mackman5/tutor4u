@@ -36,6 +36,8 @@ nav ul li a:hover
 nav ul li
 {
   list-style: none;
+  display: inline-block;
+  vertical-align: top;
 }
 
 .left-nav
@@ -59,6 +61,7 @@ nav ul li
 #menuButtonDiv
 {
   width: 110px;
+  margin-top: 10px;
 }
 
 #menuButton h1
@@ -68,7 +71,6 @@ nav ul li
   margin-inline-start: 0;
   margin-inline-end: 0;
   font-size: 32px;
-  margin-top: 25px;
   margin-left: -10px;
 }
 
@@ -296,4 +298,12 @@ h1
   font-size: 14px;
   cursor: pointer;
   text-align: start;
+}
+
+#navLogo
+{
+  height: 70px;
+  position: fixed;
+  top: 16px;
+  left: 46%;
 }

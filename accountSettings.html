@@ -120,19 +120,19 @@
     <a href = "index.html"><button id = "input-home">Home</button></a>
 </div>
 
-<div id = accountSettingsDetails>
-    <p id = emailText></p>
-    <button id = goToVerifyBtn style="display:none" onclick = window.location.replace("verify.html");>Verify My Account</button>
-    <button id = changeEmailBtn onclick = "toggleForm('#changeEmailForm');">Change Email</button>
-    <div id = changeEmailForm style="display:none">
+<div id = "accountSettingsDetails">
+    <p id = "emailText"></p>
+    <button id = "goToVerifyBtn" style="display:none" onclick = window.location.replace("verify.html");>Verify My Account</button>
+    <button id = "changeEmailBtn" onclick = "toggleForm('#changeEmailForm');">Change Email</button>
+    <div id = "changeEmailForm" style="display:none">
         <p class = "input_field">Sign in Email: &nbsp;<input type = "text" name = "email" id = "eEmail_field"/><br></p>
         <p class = "input_field">Password: &nbsp;<input type = "password" name = "password" id = "ePass_field"/><br></p>
         <p class = "input_field">New Email: &nbsp;<input type = "text" name = "email" id = "new_email_field"/><br></p>
         <button id = confirmEmailChangeBtn onclick="changeEmail();">Confirm Changes</button>
     </div>
 
-    <button id = changePassBtn onclick = "toggleForm('#changePassForm');">Change Password</button>
-    <div id = changePassForm style ="display:none">
+    <button id = "changePassBtn" onclick = "toggleForm('#changePassForm');">Change Password</button>
+    <div id = "changePassForm" style ="display:none">
         <p class = "input_field">Sign in Email: &nbsp;<input type = "text" name = "email" id = "pEmail_field"/><br></p>
         <p class = "input_field">Password: &nbsp;<input type = "password" name = "password" id = "pPass_field"/><br></p>
 
@@ -140,7 +140,7 @@
         <p class = "input_field">New Password: &nbsp;<input type = "password" name = "email" id = "new_pass_field"/><br></p>
         <p class = "input_field">Confirm New Password: &nbsp;<input type = "password" name = "email" id = "confirm_new_pass_field"/><br></p>
 
-        <button id = confirmPassChangeBtn onclick="changePass();">Confirm Changes</button>
+        <button id = "confirmPassChangeBtn" onclick="changePass();">Confirm Changes</button>
 
     </div>
 </div>

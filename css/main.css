@@ -286,7 +286,7 @@ h1
   width: 200px;
 }
 
-#email_field:focus, #password_field:focus, #name_field:focus, #grade_field:focus, #role_field:focus, #confirm_password_field:focus
+#email_field:focus, #password_field:focus, #name_field:focus, #grade_field:focus, #role_field:focus, #confirm_password_field:focus, #reset_email:focus
 {
   outline: solid 0.01em #37A000;
 }
@@ -325,4 +325,44 @@ h1
 #accountNav li
 {
   padding: 15px 5px;
+}
+
+#forgotPassForm
+{
+  margin: auto;
+  height: 250px;
+  width: 350px;
+  text-align: center;
+  background-color: white;
+  box-shadow: 10px 10px 8px #070b1d;
+  border: solid 0.1em black;
+
+}
+
+
+
+#reset_email
+{
+  margin-top: 40px;
+  font-size: 14px;
+}
+
+#sendPassResetBtn
+{
+  margin-top: 15px;
+  padding: 5px;
+  background-color: #453e99;
+  color: white;
+  font-size: 14px;
+}
+
+#backToTheLogin
+{
+  margin-top: 15px;
+}
+
+#spacerbecauseamazondoesitthisway
+{
+  height: 150px;
+  margin: auto;
 }

@@ -211,38 +211,92 @@
             $("#menuButtonDiv").click(function(e) {
                 e.stopPropagation();
             });
+
+            var documentEL = $(document),
+            fadeElem = $("body");
+            documentEL.on("scroll", function () {
+                var currScrollPos = documentEL.scrollTop();
+                fadeElem.each(function () {
+                    var $this = $(this),
+                        elemOffsetTop = $this.offset().top;
+                    if (currScrollPos + 100 > elemOffsetTop) {
+                        $("body").css("background-color", "rgba(0,170," + (255 - currScrollPos/3)  + ",0.5)");
+                    }
+                });
+
+            });
+
+            var documentEL = $(document),
+                fadeElem = $("#textBox");
+            documentEL.on("scroll", function () {
+                var currScrollPos = documentEL.scrollTop();
+                fadeElem.each(function () {
+                    var $this = $(this),
+                        elemOffsetTop = $this.offset().top;
+                    if (currScrollPos + 100 > elemOffsetTop) {
+                        $("#textBox").css("background-color", "rgba(100,100, 255, 0.3)");
+
+                    }
+                });
+
+            });
+
         });
 
     </script>
 
 </head>
 <body>
-<nav>
-    <ul>
-        <li id = "menuButtonDiv"><a id = "menuButton" onclick = "sideNavSlide()"><h1>&#9776; Menu</h1></a></li>
-    </ul>
-</nav>
-<div id = "side-nav">
-    <ul>
-        <li class = "left-nav"><a href = "index.html"><h2>Home</h2></a></li>
-        <li class = "left-nav"><a href = "tutoring.html"><h2>Tutoring</h2></a></li>
-        <li class = "left-nav"><a href = "options.html"><h2>Options</h2></a></li>
-        <li class = "left-nav"><a href = "about.html"><h2>About</h2></a></li>
-        <li class = "left-nav"><a href = "messaging.html"><h2>Messaging</h2></a></li>
-    </ul>
-</div>
-<p id = "message"> Messages Go Here </p>
-<br>
-<br>
-<p style = "display:inline-block;">Name:&nbsp</p><p id = "toggleMessageUser" style = "display:inline-block;"><input type = "text" id = "messageUser"></p>
-<p style = "display: inline-block;">&nbsp | Message:</p>
-<input type = "text" id = "messageSent" />
-<button onclick = "updateMessage();">Submit Message</button>
-<p>Channel: </p> <input type = "text" id = "messageChannel" />
-<button onclick = "updateChannel();">Change Message</button>
-<button onclick = "clearChatLog()">Clear chat log</button>
-<br>
-<div id = "loading">
-</div>
+
+    <nav>
+        <ul>
+            <li id = "menuButtonDiv"><a id = "menuButton" onclick = "sideNavSlide()"><h1>&#9776; Menu</h1></a></li>
+        </ul>
+    </nav>
+
+    <div id = "side-nav">
+        <ul>
+            <li class = "left-nav"><a href = "index.html"><h2>Home</h2></a></li>
+            <li class = "left-nav"><a href = "tutoring.html"><h2>Tutoring</h2></a></li>
+            <li class = "left-nav"><a href = "options.html"><h2>Options</h2></a></li>
+            <li class = "left-nav"><a href = "about.html"><h2>About</h2></a></li>
+            <li class = "left-nav"><a href = "messaging.html"><h2>Messaging</h2></a></li>
+        </ul>
+    </div>
+
+    <div id="textBox">
+        <p id = "message"> Messages Go Here </p>
+    </div>
+
+    <p style = "display:inline-block;">Name:&nbsp</p><p id = "toggleMessageUser" style = "display:inline-block;"><input type = "text" id = "messageUser"></p>
+    <p style = "display: inline-block;">&nbsp | Message:</p>
+    <input type = "text" id = "messageSent" />
+    <button onclick = "updateMessage();">Submit Message</button>
+    <p>Channel: </p> <input type = "text" id = "messageChannel" />
+    <button onclick = "updateChannel();">Change Message</button>
+    <button onclick = "clearChatLog()">Clear chat log</button>
+    <div id = "loading">
+    </div>
+
+    <p>ye</p>
+    <p>he</p>
+    <p>he</p>
+    <p>he</p>
+    <p>he</p>
+    <p>he</p>
+    <p>he</p>
+    <p>he</p>
+    <p>he</p>
+    <p>he</p>
+    <p>he</p>
+    <p>he</p>
+    <p>he</p>
+    <p>he</p>
+    <p>he</p>
+    <p>he</p>
+    <p>he</p>
+    <p>hawers</p>
+
 </body>
+
 </html>

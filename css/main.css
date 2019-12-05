@@ -112,6 +112,20 @@ nav ul li
   height: 100%;
 }
 
+#textBox
+{
+  width: 1000px;
+  margin: 0 auto;
+}
+
+#message
+{
+  border: #CCC 2px solid;
+  width: 1000px;height: 450px;
+  overflow: auto;
+  margin-top: 130px;
+}
+
 a
 {
   text-decoration: none;
@@ -142,14 +156,6 @@ a
   margin: 3% auto;
   background-color: #B5D6FB;
   text-align: center;
-}
-
-#message
-{
-  border: #CCC 2px solid;
-  width: 75%;height: 450px;
-  overflow: auto;
-  margin-top: 130px;
 }
 
 #toggleLink:hover

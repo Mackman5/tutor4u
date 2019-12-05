@@ -36,6 +36,8 @@ nav ul li a:hover
 nav ul li
 {
   list-style: none;
+  display: inline-block;
+  vertical-align: top;
 }
 
 .left-nav
@@ -59,6 +61,7 @@ nav ul li
 #menuButtonDiv
 {
   width: 110px;
+  margin-top: 10px;
 }
 
 #menuButton h1
@@ -68,7 +71,6 @@ nav ul li
   margin-inline-start: 0;
   margin-inline-end: 0;
   font-size: 32px;
-  margin-top: 25px;
   margin-left: -10px;
 }
 
@@ -290,7 +292,7 @@ h1
   width: 200px;
 }
 
-#email_field:focus, #password_field:focus, #name_field:focus, #grade_field:focus, #role_field:focus, #confirm_password_field:focus
+#email_field:focus, #password_field:focus, #name_field:focus, #grade_field:focus, #role_field:focus, #confirm_password_field:focus, #reset_email:focus
 {
   outline: solid 0.01em #37A000;
 }
@@ -302,4 +304,71 @@ h1
   font-size: 14px;
   cursor: pointer;
   text-align: start;
+}
+
+#navLogo
+{
+  height: 70px;
+  position: fixed;
+  top: 16px;
+  left: 46%;
+}
+
+#accountContainer
+{
+  background-color: white;
+  width: 400px;
+  margin: auto;
+}
+
+#accountNav
+{
+  margin-top: 30px;
+  list-style: none;
+  display: inline-block;
+}
+
+#accountNav li
+{
+  padding: 15px 5px;
+}
+
+#forgotPassForm
+{
+  margin: auto;
+  height: 250px;
+  width: 350px;
+  text-align: center;
+  background-color: white;
+  box-shadow: 10px 10px 8px #070b1d;
+  border: solid 0.1em black;
+
+}
+
+
+
+#reset_email
+{
+  margin-top: 40px;
+  font-size: 14px;
+}
+
+#sendPassResetBtn
+{
+  margin-top: 15px;
+  padding: 5px;
+  background-color: #453e99;
+  color: white;
+  font-size: 14px;
+}
+
+#backToTheLogin
+{
+  margin-top: 15px;
+}
+
+#spacerbecauseamazondoesitthisway
+{
+  height: 150px;
+  margin: auto;
 }
